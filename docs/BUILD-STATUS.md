@@ -1,26 +1,38 @@
 # Build status / Derleme durumu
 
-## Current scope / Güncel kapsam
-This repository now documents **standard Termux** Android development on a phone. A custom ByTelli-Termux APK is **not required**.
+## Verified phone build / Telefonda dogrulanan derleme (2026-10-13)
 
-Bu depo artık telefonda **normal Termux** ile Android geliştirme rehberine odaklanır. Özel ByTelli-Termux APK'sı **gerekli değildir**.
+**ByTelli Developer Lab V0.1** was built as a debug APK using **standard Google Play Termux** on an ARM64 Samsung SM-S918B running Android 16. The user installed and opened the app; a screenshot confirms the main screen renders device details and editor/file controls.
 
-## What is available / Mevcut olanlar
-- Bilingual setup and APK build documentation / Türkçe-İngilizce kurulum ve APK derleme rehberi
-- A read-only diagnostic script / Salt okunur ortam kontrol betiği
-- GitHub issue and pull request templates / Hata ve katkı şablonları
+**ByTelli Developer Lab V0.1**, normal Google Play Termux ile ARM64 Samsung SM-S918B (Android 16) cihazinda debug APK olarak derlendi. Kullanici APK'yi kurup uygulamayi acti; ekran goruntusu ana ekranin ve cihaz bilgilerinin goruntulendigini dogruluyor.
 
-## What is not yet verified / Henüz doğrulanmayanlar
-- A universally reproducible Android SDK + ARM64 aapt2 installation for standard Termux
-- A complete sample Android app and end-to-end APK build using only this repository
-- A prebuilt or supported APK release
+| Component | Observed working setup |
+| --- | --- |
+| Java | OpenJDK 25.0.3 |
+| Gradle | 9.6.0 (system `gradle` command) |
+| Android Gradle Plugin | 8.7.3 (example project) |
+| compileSdk | 34 (changed locally from 35) |
+| Android SDK | `$HOME/android-sdk` |
+| AAPT2 | Termux ARM64 `$PREFIX/bin/aapt2` via `android.aapt2FromMavenOverride` |
+| Build command | `gradle --no-daemon assembleDebug` |
+| Build result | `BUILD SUCCESSFUL in 39s` |
+| APK | `app/build/outputs/apk/debug/app-debug.apk` |
+| Install and launch | Confirmed by user screenshot |
 
-These limitations are intentional: contributors should not mistake a proposed workflow for a tested universal solution.
+**Important / Onemli:** The checked-in example still specifies `compileSdk 35`. The successful build used a **local change to 34**, not the unmodified repository. File open/create/save buttons are visible but their behavior has **not yet been functionally tested**. This is one-device validation, not universal compatibility.
 
-Bu sınırlamalar açıkça belirtilmiştir: Önerilen adımlar, bütün telefonlarda test edilmiş kesin çözüm olarak sunulmaz.
+## Encountered issues / Karsilasilan hatalar
 
-## Next milestones / Sonraki hedefler
-1. Document a verified ARM64 aapt2/Android SDK setup.
-2. Add a minimal Android app example and record a clean build.
-3. Publish tested device/Android/Gradle compatibility notes.
-4. Review licensing of all third-party dependencies before redistribution.
+- Java 21.0.11: `javac` and class execution aborted with `PerfettoTrace` error (exit 134); Java 25.0.3 compiled and ran a Java test and started Gradle 9.6 successfully.
+- SDK build-tools 35.0.0 included x86-64 `aapt2`; replaced locally with Termux ARM64 `aapt2`, retaining a backup.
+- Termux ARM64 `aapt2` successfully parsed Android 33 and 34 framework resources, but failed for 35 and crashed for 36; changing project `compileSdk` to 34 enabled the build.
+- APK was copied to Android Downloads after build and installed on the phone.
+
+## Remaining work / Kalan isler
+
+1. Test file open/create/save on device and fix any bugs.
+2. Update example build configuration to the verified SDK 34 baseline while documenting SDK 35 limitations.
+3. Produce a repeatable from-scratch installation guide for Android SDK and ARM64 tools.
+4. Test on other devices and review third-party redistribution licensing.
+
+**No universal compatibility claim / Tum cihazlar icin uyumluluk garantisi yoktur.**
