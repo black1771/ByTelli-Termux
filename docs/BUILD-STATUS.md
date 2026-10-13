@@ -41,3 +41,8 @@
 ## V0.2 on-device verification (2026-10-13)
 
 The user built and installed ByTelli Developer Lab V0.2 on an Android 16 ARM64 phone using standard Termux with compileSdk 34. Verified on device: app launches; project `MyFirstApp` created; `Main.java` created and displayed with source text; the file was saved, the app was fully closed and reopened, and `Main.java` still contained the saved code. This confirms persistent local project-file storage for the tested workflow. Compilation/execution of Java source inside the app is **not implemented or tested**. Further editor edge-case tests remain pending.
+
+
+## Developer Lab V1.0 final candidate — on-device verification (2026-10-13)
+
+User-built debug APK on Android 16 ARM64 via standard Termux (Java 25, Gradle 9.6, compileSdk 34, ARM64 Termux aapt2). Screenshots confirm the V1.0 app launches with dark theme, project explorer retains `MyFirstApp`, `Main.java` reopens, line numbers 1–5 align, and syntax coloring is visible on Java keywords and a string literal. Prior V0.2 test verified persistent save after app restart. The V1.0 APK and full source are currently on the user's phone; **this documentation update does not upload them to GitHub**. Source-code execution/compiler functionality is not implemented. APK is a debug build; no release signing or broad device compatibility testing has been performed.
