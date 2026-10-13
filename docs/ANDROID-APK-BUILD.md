@@ -61,3 +61,40 @@ Report Android version, CPU architecture, Termux source, JDK, Gradle, AGP, SDK/b
 Android sürümü, mimari, Termux kaynağı, Java/Gradle/AGP/SDK sürümleri, komutlar ve özel bilgileri temizlenmiş logları paylaşın. Denenen çözümlerle önerileri ayırın.
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+
+## 7. Java and Gradle versions / Java ve Gradle sürümleri
+
+**A real-world lesson from our phone-based APK experiments:** The Java and Gradle versions must be compatible with **each other and the Android Gradle Plugin (AGP)**. A version number by itself is not enough to guarantee a successful build.
+
+**Telefonda APK geliştirme deneyimimizden ders:** Java, Gradle ve Android Gradle Plugin (AGP) sürümleri **birbirleriyle uyumlu olmalıdır**. Her proje için otomatik olarak "Java 26 ve Gradle 9 zorunlu" denemez. Projeye ve kullanılan eklentiye göre değişir.
+
+### Inspect the project's requirements / Projenin sürümlerini kontrol edin
+Run inside an existing Gradle project / Mevcut Gradle projesinde:
+```sh
+java -version
+./gradlew --version
+cat gradle/wrapper/gradle-wrapper.properties
+grep -R -n 'com.android.application\|com.android.library' settings.gradle* build.gradle* app/build.gradle* 2>/dev/null
+```
+The wrapper's `distributionUrl` determines which Gradle release the project downloads. The AGP version determines which Gradle/JDK combinations are supported. See official [Gradle compatibility](https://docs.gradle.org/current/userguide/compatibility.html) and [Android Gradle Plugin compatibility](https://developer.android.com/build/releases/gradle-plugin) documentation.
+
+### Gradle 9 example / Gradle 9 örneği
+If your project explicitly requires Gradle 9, set its wrapper to a **specific compatible 9.x release** after verifying AGP compatibility. For example, the wrapper configuration has a line of this form (the version below is illustrative):
+```properties
+distributionUrl=https\://services.gradle.org/distributions/gradle-9.2.1-bin.zip
+```
+Do not blindly replace an existing working wrapper. Do not download a Gradle distribution from an unknown site.
+
+### Java 26 note / Java 26 notu
+If a particular project requires Java 26, you must obtain a **trusted, Android ARM64-compatible JDK 26 build** and verify it with `java -version`. Do not assume `pkg install openjdk-26` is available in Termux or that Java 26 is needed for every APK. Newer Java versions may not be supported by the Gradle/AGP combination selected by the project.
+
+Belirli bir proje Java 26 gerektiriyorsa güvenilir ve Android ARM64 uyumlu JDK 26 kurulumu gerekir. Termux'ta `openjdk-26` paketinin mevcut olduğunu varsaymayın. Daha yeni Java her zaman daha iyi uyumluluk sağlamaz.
+
+### Troubleshooting / Hata ayıklama
+- `Unsupported class file major version`: check JDK versus Gradle/AGP compatibility.
+- `Android Gradle plugin requires Java ...`: use the minimum supported JDK stated by AGP.
+- `Gradle ... is not supported`: check the project's AGP version and wrapper.
+- `aapt2` fails even after Java/Gradle succeed: this is a **separate Android ARM64 build-tools problem**, not necessarily a Java version problem.
+
+**Community test request / Topluluk testi:** Please share the exact `java -version`, `./gradlew --version`, AGP version and whether `assembleDebug` actually produced an APK. This helps replace anecdotal requirements with verified compatibility records.
