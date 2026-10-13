@@ -3,7 +3,7 @@
 **Build Android apps directly on your phone. No PC required.**
 
 [![Download Developer Lab](https://img.shields.io/badge/Download-Developer%20Lab%20v1.0-blue?logo=android)](https://github.com/black1771/ByTelli-Termux/releases/tag/v1.0.0)
-[![Open Source](https://img.shields.io/badge/Open%20Source-GitHub-black?logo=github)](https://github.com/black1771/ByTelli-Termux)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Help Wanted](https://img.shields.io/badge/Contributions-Welcome-brightgreen)](CONTRIBUTING.md)
 [![Support](https://img.shields.io/badge/Support-ByTelli-orange)](SUPPORT.md)
 
@@ -13,9 +13,11 @@ ByTelli is an independent, experimental Android development project built and te
 
 > **What makes this different?** The development workflow runs on the phone itself — including Java, Gradle and Android SDK setup. No desktop computer was used for the verified ByTelli Developer Lab build.
 
-## 📱 Featured app: ByTelli Developer Lab V1.0
+## 📱 Example app: ByTelli Developer Lab V1.0
 
-A lightweight Android **Java source editor** built entirely on an ARM64 phone.
+**Developer Lab V1.0 is the example/demo APK for this repository.** It demonstrates the documented phone-only Android development workflow. It is not required to use the build guide and it is not the Android SDK.
+
+The example itself is a lightweight Android **Java source editor** built entirely on an ARM64 phone.
 
 ### 📸 Real screenshots from Android 16
 
@@ -33,7 +35,7 @@ Screenshots captured on the phone running the published V1.0 app.
 
 **[⬇ Download APK — V1.0](https://github.com/black1771/ByTelli-Termux/releases/download/v1.0.0/ByTelliDeveloperLab-FINAL-V1.apk)** · **[📁 View source](examples/ByTelliDeveloperLabV1)** · **[📝 Release notes](https://github.com/black1771/ByTelli-Termux/releases/tag/v1.0.0)**
 
-**Important:** V1.0 is a source-code editor, **not** an on-device compiler or full APK-building IDE. The published APK is a **debug build**, not a production-signed Play Store release. Review source and verify downloads before installing.
+**Important:** V1.0 is an **example application** and source-code editor, **not** an on-device compiler or full APK-building IDE. The published APK is a **debug build**, not a production-signed Play Store release. Review source and verify downloads before installing.
 
 ## 🛠️ Build Android APKs using standard Termux
 
@@ -45,6 +47,7 @@ This repository also documents how to compile Android apps **inside regular Term
 2. Follow the **[step-by-step guide: install Java + Android SDK + ARM64 AAPT2, build an APK and install it](docs/ANDROID-APK-BUILD.md)**.
 3. Explore the **[Developer Lab V1 source](examples/ByTelliDeveloperLabV1)**.
 4. Check **[build status and known limitations](docs/BUILD-STATUS.md)**.
+5. Use **[`scripts/check-environment.sh`](scripts/check-environment.sh)** to inspect your environment.
 
 The Android SDK, compatible Gradle versions and ARM64 `aapt2` require manual setup. **This is not a universal one-command installer**, and device compatibility varies.
 
@@ -72,10 +75,12 @@ Bu depo, **normal Termux** üzerinden Android APK derleme deneyimlerini, kaynak 
 - **[Hata bildir / öneri gönder](https://github.com/black1771/ByTelli-Termux/issues)**
 - **[Projeye destek ol](SUPPORT.md)**
 
-**Not:** Developer Lab V1.0 kod düzenleyicisidir; kendi içinde APK derlemez. APK, test amaçlı debug sürümüdür. Termux üzerinden APK derlemek için SDK ve araçların ayrıca kurulması gerekir.
+**Not:** Developer Lab V1.0 bu deponun **örnek/demo APK'sıdır**. Telefonda uygulama geliştirme ve derleme yönteminin çalışan örneğini gösterir. Kod düzenleyicisidir; kendi içinde APK derlemez. APK, test amaçlı debug sürümüdür. Termux üzerinden APK derlemek için SDK ve araçların ayrıca kurulması gerekir.
 
 ---
 
 **Independent community project; not affiliated with the official Termux project.**
 
 **Security:** Never share signing keys, access tokens, private keys, recovery phrases or sensitive logs. Do not execute unreviewed third-party scripts.
+
+**License:** MIT — see [LICENSE](LICENSE).
