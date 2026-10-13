@@ -1,4 +1,4 @@
-# ByTelli Developer Lab V1.0
+# Byblack Developer Lab V1.0
 
 Android Java source editor developed and built entirely on a phone using standard Termux. Tested on Samsung ARM64 / Android 16.
 
