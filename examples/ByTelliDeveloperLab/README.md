@@ -1,4 +1,4 @@
-# ByTelli Developer Lab — V0.1 (source example)
+# Byblack Developer Lab — V0.1 (source example)
 
 A **real Android Java source project**, not a Hello World screen. Includes:
 - Device/Android/ABI information
