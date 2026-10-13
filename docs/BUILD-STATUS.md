@@ -2,9 +2,9 @@
 
 ## Verified phone build / Telefonda dogrulanan derleme (2026-10-13)
 
-**ByTelli Developer Lab V0.1** was built as a debug APK using **standard Google Play Termux** on an ARM64 Samsung SM-S918B running Android 16. The user installed and opened the app; a screenshot confirms the main screen renders device details and editor/file controls.
+**Byblack Developer Lab V0.1** was built as a debug APK using **standard Google Play Termux** on an ARM64 Samsung SM-S918B running Android 16. The user installed and opened the app; a screenshot confirms the main screen renders device details and editor/file controls.
 
-**ByTelli Developer Lab V0.1**, normal Google Play Termux ile ARM64 Samsung SM-S918B (Android 16) cihazinda debug APK olarak derlendi. Kullanici APK'yi kurup uygulamayi acti; ekran goruntusu ana ekranin ve cihaz bilgilerinin goruntulendigini dogruluyor.
+**Byblack Developer Lab V0.1**, normal Google Play Termux ile ARM64 Samsung SM-S918B (Android 16) cihazinda debug APK olarak derlendi. Kullanici APK'yi kurup uygulamayi acti; ekran goruntusu ana ekranin ve cihaz bilgilerinin goruntulendigini dogruluyor.
 
 | Component | Observed working setup |
 | --- | --- |
@@ -40,7 +40,7 @@
 
 ## V0.2 on-device verification (2026-10-13)
 
-The user built and installed ByTelli Developer Lab V0.2 on an Android 16 ARM64 phone using standard Termux with compileSdk 34. Verified on device: app launches; project `MyFirstApp` created; `Main.java` created and displayed with source text; the file was saved, the app was fully closed and reopened, and `Main.java` still contained the saved code. This confirms persistent local project-file storage for the tested workflow. Compilation/execution of Java source inside the app is **not implemented or tested**. Further editor edge-case tests remain pending.
+The user built and installed Byblack Developer Lab V0.2 on an Android 16 ARM64 phone using standard Termux with compileSdk 34. Verified on device: app launches; project `MyFirstApp` created; `Main.java` created and displayed with source text; the file was saved, the app was fully closed and reopened, and `Main.java` still contained the saved code. This confirms persistent local project-file storage for the tested workflow. Compilation/execution of Java source inside the app is **not implemented or tested**. Further editor edge-case tests remain pending.
 
 
 ## Developer Lab V1.0 final candidate — on-device verification (2026-10-13)
