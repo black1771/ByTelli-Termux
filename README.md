@@ -42,7 +42,7 @@ This repository also documents how to compile Android apps **inside regular Term
 **Verified Developer Lab build environment:** ARM64 Android / Java 25 / Gradle 9.6 / Android Gradle Plugin 8.7.3 / Android SDK platform 34 / Termux-native `aapt2`.
 
 1. Install Termux from a [trusted official source](https://github.com/termux/termux-app#installation).
-2. Read the **[Android APK build guide](docs/ANDROID-APK-BUILD.md)**.
+2. Follow the **[step-by-step guide: install Java + Android SDK + ARM64 AAPT2, build an APK and install it](docs/ANDROID-APK-BUILD.md)**.
 3. Explore the **[Developer Lab V1 source](examples/ByTelliDeveloperLabV1)**.
 4. Check **[build status and known limitations](docs/BUILD-STATUS.md)**.
 
@@ -68,7 +68,7 @@ Bu depo, **normal Termux** üzerinden Android APK derleme deneyimlerini, kaynak 
 
 - **[ByTelli Developer Lab V1.0 APK indir](https://github.com/black1771/ByTelli-Termux/releases/tag/v1.0.0)**
 - **[Uygulamanın kaynak kodu](examples/ByTelliDeveloperLabV1)**
-- **[Telefonda APK derleme rehberi](docs/ANDROID-APK-BUILD.md)**
+- **[Sıfırdan SDK kurulumu, APK derleme ve telefona yükleme](docs/ANDROID-APK-BUILD.md)**
 - **[Hata bildir / öneri gönder](https://github.com/black1771/ByTelli-Termux/issues)**
 - **[Projeye destek ol](SUPPORT.md)**
 
