@@ -14,9 +14,25 @@ If you find this project useful, you can help it grow in several ways:
 
 Open a [GitHub Issue](https://github.com/black1771/ByTelli-Termux/issues/new) and describe the problem. Please do **not** post passwords, private keys, wallet recovery phrases, or personal information.
 
-## Want to support development financially?
+## Support development with crypto
 
-A donation or sponsorship link has **not been configured yet**. Only use a payment link once it has been explicitly published by the project owner in this repository. Never send money to links posted by strangers claiming to represent ByTelli.
+Crypto donations are optional and help support ongoing development.
+
+**Public EVM wallet address (Ethereum and BNB Smart Chain):**
+
+```text
+0x9BD3260Ac1725ed7f14899e54C125aa988373b5b
+```
+
+| Asset | Network |
+| --- | --- |
+| ETH | Ethereum mainnet |
+| BNB | BNB Smart Chain (BEP-20) |
+| USDT | Ethereum (ERC-20) or BNB Smart Chain (BEP-20), only if your wallet supports the selected network |
+
+**Important:** Always select the correct network and verify wallet support before sending. Transactions are irreversible. Do not send tokens on other networks just because they use the same `0x` address.
+
+Only use donation addresses published in this repository. Never send funds to addresses posted by strangers claiming to represent ByTelli.
 
 ## Project links
 
