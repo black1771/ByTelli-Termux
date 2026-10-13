@@ -1,0 +1,21 @@
+name: Repository checks
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check shell syntax
+        run: bash -n scripts/check-environment.sh
+      - name: Validate example baseline
+        run: |
+          test -f examples/ByTelliDeveloperLabV1/app/src/main/AndroidManifest.xml
+          grep -q "compileSdk 34" examples/ByTelliDeveloperLabV1/app/build.gradle
+          test -s docs/ANDROID-APK-BUILD.md
+          test -s docs/BUILD-STATUS.md
+          test -s LICENSE
