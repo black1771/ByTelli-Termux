@@ -49,7 +49,25 @@ This repository also documents how to compile Android apps **inside regular Term
 4. Check **[build status and known limitations](docs/BUILD-STATUS.md)**.
 5. Use **[`scripts/check-environment.sh`](scripts/check-environment.sh)** to inspect your environment.
 
-The Android SDK, compatible Gradle versions and ARM64 `aapt2` require manual setup. **This is not a universal one-command installer**, and device compatibility varies.
+### ⚡ Guided setup + one-command example build
+
+After you manually download Google's official Android **command-line tools ZIP**, the helper can prepare the verified SDK 34 layout:
+
+```sh
+git clone https://github.com/black1771/ByTelli-Termux.git
+cd ByTelli-Termux
+bash scripts/setup-android-build.sh ~/storage/downloads/commandlinetools-linux-*.zip
+```
+
+Review and accept Google's SDK licenses yourself when prompted, then build the example with:
+
+```sh
+bash scripts/build-example.sh
+```
+
+On success the helper also copies `ByTelliDeveloperLab-V1-debug.apk` to Android Downloads when Termux storage access is available.
+
+**Safety/design:** the setup helper does not download Google's SDK ZIP for you, does not auto-accept licenses, and does not silently install APKs. Package availability and device compatibility can vary.
 
 ## 🤝 Help make ByTelli better
 
@@ -76,6 +94,8 @@ Bu depo, **normal Termux** üzerinden Android APK derleme deneyimlerini, kaynak 
 - **[Projeye destek ol](SUPPORT.md)**
 
 **Not:** Developer Lab V1.0 bu deponun **örnek/demo APK'sıdır**. Telefonda uygulama geliştirme ve derleme yönteminin çalışan örneğini gösterir. Kod düzenleyicisidir; kendi içinde APK derlemez. APK, test amaçlı debug sürümüdür. Termux üzerinden APK derlemek için SDK ve araçların ayrıca kurulması gerekir.
+
+**Kolay kurulum:** Google'ın resmi command-line tools ZIP dosyasını kendiniz indirdikten sonra `scripts/setup-android-build.sh` SDK 34 ortamını hazırlar; `scripts/build-example.sh` ise örnek APK'yı tek komutla derler. Lisans kabulü kullanıcıya bırakılır.
 
 ---
 
