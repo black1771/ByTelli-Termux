@@ -39,6 +39,15 @@ Crypto donations are optional and help support ongoing development.
 
 Send SOL or supported Solana tokens only on the **Solana network**. Always verify the address and network before transferring.
 
+
+**TRON (TRX and USDT TRC-20) — TRON network:**
+
+```text
+TEHsFEqqGmrVjY8DbQncR7wYiW9hf5tRHr
+```
+
+For USDT on TRON, select **TRC-20 (TRON)**. Do not use Ethereum (ERC-20) or BNB Smart Chain (BEP-20) when sending to this address.
+
 **Important:** Always select the correct network and verify wallet support before sending. Transactions are irreversible. Do not send tokens on other networks just because they use the same `0x` address.
 
 Only use donation addresses published in this repository. Never send funds to addresses posted by strangers claiming to represent ByTelli.
