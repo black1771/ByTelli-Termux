@@ -17,6 +17,14 @@ ByTelli is an independent, experimental Android development project built and te
 
 A lightweight Android **Java source editor** built entirely on an ARM64 phone.
 
+### 📸 Real screenshots from Android 16
+
+| Main screen and project explorer | Java editor with syntax highlighting |
+|:--:|:--:|
+| <img src="Screenshot_20261013_131036.jpg" alt="ByTelli Developer Lab main screen and project explorer" width="260"> | <img src="Screenshot_20261013_131103.jpg" alt="ByTelli Developer Lab editing Main.java with colored Java syntax" width="260"> |
+
+Screenshots captured on the phone running the published V1.0 app.
+
 **Features**
 - Dark editor with basic Java syntax highlighting and line numbers
 - Create projects and keep local files between sessions
