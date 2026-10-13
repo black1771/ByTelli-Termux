@@ -98,3 +98,36 @@ Belirli bir proje Java 26 gerektiriyorsa güvenilir ve Android ARM64 uyumlu JDK 
 - `aapt2` fails even after Java/Gradle succeed: this is a **separate Android ARM64 build-tools problem**, not necessarily a Java version problem.
 
 **Community test request / Topluluk testi:** Please share the exact `java -version`, `./gradlew --version`, AGP version and whether `assembleDebug` actually produced an APK. This helps replace anecdotal requirements with verified compatibility records.
+
+
+## 8. Copy the built APK to Downloads / APK'yi Indirilenler'e kopyalama
+
+After a **successful** `assembleDebug` build, run this **from the Android project root**:
+
+Basarili `assembleDebug` isleminden sonra, **proje ana klasorunde**:
+
+```sh
+# Request shared-storage access once if it has not been granted.
+# Depolama izni daha once verilmediyse bir kez calistirin:
+termux-setup-storage
+
+# Check that the APK really exists / APK'nin olustugunu dogrulayin:
+test -f app/build/outputs/apk/debug/app-debug.apk || {
+  echo "APK not found / APK bulunamadi"; exit 1;
+}
+
+# Copy into the phone's Downloads folder / Telefonun Indirilenler klasorune kopyala:
+cp app/build/outputs/apk/debug/app-debug.apk \
+  /storage/emulated/0/Download/ByTelliDeveloperLab-V1.apk
+
+# Verify / Dogrula:
+ls -lh /storage/emulated/0/Download/ByTelliDeveloperLab-V1.apk
+```
+
+**Alternative / Alternatif:** On Termux installations with storage shortcuts configured, `$HOME/storage/downloads/` usually points to the same shared Downloads folder.
+
+If you get `Permission denied`, grant Termux storage permission via Android settings and run `termux-setup-storage` again. Do not use `sudo` or change permissions on `/storage/emulated/0`. If the source file is missing, check the build log for `BUILD SUCCESSFUL` and confirm the project's APK output path.
+
+`Permission denied` hatasinda Android ayarlarindan Termux depolama iznini verin ve `termux-setup-storage` komutunu yeniden calistirin. `sudo` kullanmayin; paylasilan depolamanin izinlerini degistirmeyin. Kaynak APK yoksa derleme sonucunu ve dosya yolunu kontrol edin.
+
+**Test status / Test durumu:** On one ARM64 Android 16 device, the ByTelli Developer Lab sample built successfully in 39 seconds with Java 25.0.3, Gradle 9.6.0, `compileSdk 34` and Termux ARM64 AAPT2 override. Copying and installing the APK are separate steps; successful installation and runtime behavior are not yet verified.
