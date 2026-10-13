@@ -1,0 +1,12 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.bytelli.developerlab'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'com.bytelli.developerlab'
+        minSdk 26
+        targetSdk 28
+        versionCode 10
+        versionName '1.0'
+    }
+}
