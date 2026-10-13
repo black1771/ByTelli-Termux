@@ -36,3 +36,8 @@
 4. Test on other devices and review third-party redistribution licensing.
 
 **No universal compatibility claim / Tum cihazlar icin uyumluluk garantisi yoktur.**
+
+
+## V0.2 on-device verification (2026-10-13)
+
+The user built and installed ByTelli Developer Lab V0.2 on an Android 16 ARM64 phone using standard Termux with compileSdk 34. Verified on device: app launches; project `MyFirstApp` created; `Main.java` created and displayed with source text; the file was saved, the app was fully closed and reopened, and `Main.java` still contained the saved code. This confirms persistent local project-file storage for the tested workflow. Compilation/execution of Java source inside the app is **not implemented or tested**. Further editor edge-case tests remain pending.
