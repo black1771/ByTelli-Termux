@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         LinearLayout controls = new LinearLayout(this);
         controls.setOrientation(LinearLayout.VERTICAL);
         TextView title = new TextView(this);
-        title.setText("ByTelli Developer Lab • V0.1");
+        title.setText("Byblack Developer Lab • V0.1");
         title.setTextSize(22);
         controls.addView(title);
         status = new TextView(this);
