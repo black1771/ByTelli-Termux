@@ -30,6 +30,15 @@ Crypto donations are optional and help support ongoing development.
 | BNB | BNB Smart Chain (BEP-20) |
 | USDT | Ethereum (ERC-20) or BNB Smart Chain (BEP-20), only if your wallet supports the selected network |
 
+
+**Solana (SOL) — Solana network:**
+
+```text
+71wj3dbWDwKPpqS8TJeur7T8MThvfd1TRodTuJWwPZec
+```
+
+Send SOL or supported Solana tokens only on the **Solana network**. Always verify the address and network before transferring.
+
 **Important:** Always select the correct network and verify wallet support before sending. Transactions are irreversible. Do not send tokens on other networks just because they use the same `0x` address.
 
 Only use donation addresses published in this repository. Never send funds to addresses posted by strangers claiming to represent ByTelli.
