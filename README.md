@@ -69,6 +69,28 @@ On success the helper also copies `ByTelliDeveloperLab-V1-debug.apk` to Android 
 
 **Safety/design:** the setup helper does not download Google's SDK ZIP for you, does not auto-accept licenses, and does not silently install APKs. Package availability and device compatibility can vary.
 
+## 🧰 Byblack Dev Tool
+
+The repository now includes an interactive helper for the phone-only workflow:
+
+```sh
+git clone https://github.com/black1771/ByTelli-Termux.git
+cd ByTelli-Termux
+bash scripts/bytelli-dev.sh
+```
+
+From the menu you can check the environment, prepare the SDK, create a minimal Android Java project, build a project, build the example app, and locate generated APK files.
+
+To create a new app directly:
+
+```sh
+bash scripts/new-android-project.sh
+```
+
+Enter an app name such as `MyApp` and a unique package such as `com.example.myapp`. The generator creates a minimal Java Android project configured for the repository's verified SDK 34 / ARM64 AAPT2 workflow.
+
+> **Experimental:** test the generated project on your device before relying on it for production work. The generated APK is a debug build.
+
 ## 🤝 Help make ByTelli better
 
 ⭐ **Star this repository** if the project interests you.
