@@ -1,0 +1,30 @@
+# Android / Gradle
+.gradle/
+build/
+**/build/
+local.properties
+*.apk
+*.aab
+*.apks
+*.jks
+*.keystore
+*.hprof
+# Local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
+# Python
+__pycache__/
+*.pyc
+.venv/
+# Logs and local artifacts
+*.log
+*.tmp
