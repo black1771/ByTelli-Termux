@@ -1,56 +1,50 @@
-# ByTelli-Termux
+# Build Android APKs on Your Phone with Termux
+# Normal Termux ile Telefonda APK Geliştirme
 
-**Build Android projects on an Android phone — no PC required.**  
-**Android telefonda, bilgisayar kullanmadan Android projeleri geliştirin.**
+**No PC required. No custom Termux APK required. / Bilgisayar veya özel Termux APK'sı gerekmiyor.**
 
-ByTelli-Termux is an experimental, independently packaged Termux-based development environment. It is a personal community project, not an official Termux release.
+This repository shares a community-driven workflow for developing Android apps directly on an Android phone using **standard Termux**. The Android SDK and especially an ARM64-compatible `aapt2` still require careful setup; this is not a guaranteed one-command installation.
 
-ByTelli-Termux, Termux tabanlı bağımsız paket kimliğine sahip deneysel bir geliştirme ortamıdır. Resmî Termux sürümü değildir.
+Bu depo, **normal Termux** kullanarak Android telefonda uygulama geliştirme ve APK derleme notlarını paylaşır. Android SDK ve özellikle ARM64 uyumlu `aapt2` ayrıca ayarlanmalıdır; her cihazda tek komutla kurulum garantisi verilmez.
 
-## English
+## English — Getting started
+1. Install the official Termux app from a trusted [Termux release source](https://github.com/termux/termux-app#installation).
+2. Update packages and install the basic development tools:
+   ```sh
+   pkg update && pkg upgrade
+   pkg install git python clang make cmake openjdk-21
+   ```
+3. Check versions: `java -version`, `python --version`, `clang --version`.
+4. Read the [Android APK build guide](docs/ANDROID-APK-BUILD.md) **before** attempting Gradle builds. Android SDK, Gradle/AGP compatibility and Android-native `aapt2` must be resolved for your device.
+5. Share reproducible fixes through [Issues](https://github.com/black1771/ByTelli-Termux/issues) and pull requests.
 
-### Project goals
-- Build and test Java, Python, C and C++ projects directly on an ARM64 Android phone.
-- Develop Android applications and build APKs using command-line tools.
-- Keep a separate application package and prefix from standard Termux.
-- Share reproducible build instructions, fixes and troubleshooting with other phone-only developers.
+## Türkçe — Başlangıç
+1. [Resmî Termux kaynağından](https://github.com/termux/termux-app#installation) normal Termux'u kurun.
+2. Termux içinde:
+   ```sh
+   pkg update && pkg upgrade
+   pkg install git python clang make cmake openjdk-21
+   ```
+3. `java -version`, `python --version`, `clang --version` ile kontrol edin.
+4. APK derlemeden önce [APK geliştirme rehberini](docs/ANDROID-APK-BUILD.md) okuyun. Android SDK, Gradle ve ARM64 uyumlu `aapt2` ayrıca yapılandırılmalıdır.
+5. Çözümleri GitHub Issues ve pull request üzerinden paylaşın.
 
-### Development environment
-- Android package: `com.vedat.bytellitermux`
-- Prefix: `/data/data/com.vedat.bytellitermux/files/usr`
-- Architecture: ARM64 / aarch64
-- Tools explored: OpenJDK 21, Gradle, Python, clang, make, CMake, apt and dpkg.
+## Project scope / Proje kapsamı
+- Standard Termux / Normal Termux
+- Java, Python, C/C++ development / Geliştirme
+- Gradle and Android SDK setup notes / Kurulum notları
+- APK build troubleshooting / Derleme hataları
+- Tested community fixes / Topluluk düzeltmeleri
 
-**Important:** Tool versions and availability vary by build. These are development notes, not a promise that a downloadable, production-ready APK is published here.
+**Not an official Termux project. / Resmî Termux projesi değildir.**
 
-### Start here
-Read [Android APK development guide](docs/ANDROID-APK-BUILD.md). It explains the command-line workflow, SDK/aapt2 requirements, common Android/ARM64 pitfalls and verification.
+The original ByTelli-Termux custom application is a separate experiment and is **not required** for this guide. This repository does not currently provide a verified turnkey APK build environment or a complete sample Android app.
 
-### Contribute
-Bug reports, reproducible fixes, build logs and documentation improvements are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Özel ByTelli-Termux uygulaması ayrı bir denemedir; bu rehberi kullanmak için gerekli değildir. Depoda henüz her cihazda doğrulanmış hazır APK derleme ortamı veya eksiksiz örnek Android uygulaması yoktur.
 
-## Türkçe
+See [Build status](docs/BUILD-STATUS.md) and [Contributing](CONTRIBUTING.md).
 
-### Projenin amacı
-- ARM64 Android telefonda Java, Python, C ve C++ projeleri geliştirmek.
-- Komut satırından Android uygulaması geliştirip APK üretmek.
-- Normal Termux'tan ayrı paket adı ve dosya öneki kullanmak.
-- Kurulum notlarını, hataları ve çözümleri toplulukla paylaşmak.
+## Safety / Güvenlik
+Never share signing keys, credentials, private tokens, wallet secrets or sensitive logs. Do not run unreviewed scripts from strangers.
 
-### Geliştirme ortamı
-- Paket adı: `com.vedat.bytellitermux`
-- PREFIX: `/data/data/com.vedat.bytellitermux/files/usr`
-- Mimari: ARM64 / aarch64
-- Denenen araçlar: OpenJDK 21, Gradle, Python, clang, make, CMake, apt ve dpkg.
-
-**Not:** Araç sürümleri derlemeye göre değişebilir. Bu depo henüz doğrulanmış, herkesin indirebileceği hazır bir APK sunduğunu iddia etmez.
-
-### Nereden başlamalı?
-[Telefonda APK geliştirme rehberi](docs/ANDROID-APK-BUILD.md) ve [katkı rehberi](CONTRIBUTING.md).
-
-## Security / Güvenlik
-Do not publish signing keys, tokens, wallet secrets, personal paths containing sensitive data, or private logs.  
-İmza anahtarlarını, tokenları, cüzdan gizli anahtarlarını ve özel verileri depoya yüklemeyin.
-
-## License / Lisans
-No license has been selected yet. Until one is added, do not assume the repository content is licensed for unrestricted reuse. Third-party Termux/Android components retain their own licenses.
+İmza anahtarlarını, şifreleri, tokenları veya özel logları paylaşmayın. Kaynağını incelemediğiniz betikleri çalıştırmayın.
