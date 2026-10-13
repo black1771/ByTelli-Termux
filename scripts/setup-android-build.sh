@@ -1,9 +1,9 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# ByTelli guided setup for standard Termux on ARM64 Android.
+# Byblack guided setup for standard Termux on ARM64 Android.
 # Google SDK tools are NOT downloaded automatically. User supplies the official ZIP.
 set -euo pipefail
 
-echo "=== ByTelli Android Setup ==="
+echo "=== Byblack Android Setup ==="
 [ "$(uname -m)" = "aarch64" ] || { echo "ERROR: tested setup requires ARM64/aarch64."; exit 1; }
 [ "${PREFIX:-}" = "/data/data/com.termux/files/usr" ] || { echo "ERROR: use standard Termux."; exit 1; }
 
@@ -44,9 +44,9 @@ echo "[3/6] Installing verified SDK 34 packages..."
 
 echo "[4/6] Saving environment variables..."
 PROFILE="$HOME/.bashrc"
-if ! grep -q 'BYTELLI_ANDROID_ENV' "$PROFILE" 2>/dev/null; then
+if ! grep -q 'BYBLACK_ANDROID_ENV' "$PROFILE" 2>/dev/null; then
 cat >> "$PROFILE" <<'EOF'
-# BYTELLI_ANDROID_ENV
+# BYBLACK_ANDROID_ENV
 export ANDROID_HOME="$HOME/android-sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
@@ -68,4 +68,4 @@ echo "Then build the example APK:"
 echo "  cd $PROJECT"
 echo "  bash $ROOT/scripts/build-example.sh"
 echo
-echo "ByTelli never accepts licenses or installs APKs without your confirmation."
+echo "Byblack never accepts licenses or installs APKs without your confirmation."
