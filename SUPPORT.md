@@ -1,6 +1,6 @@
-# Support ByTelli Development ❤️
+# Support Byblack Development ❤️
 
-ByTelli Developer Lab is an independent, phone-built Android development project.
+Byblack Developer Lab is an independent, phone-built Android development project.
 
 If you find this project useful, you can help it grow in several ways:
 
@@ -50,7 +50,7 @@ For USDT on TRON, select **TRC-20 (TRON)**. Do not use Ethereum (ERC-20) or BNB 
 
 **Important:** Always select the correct network and verify wallet support before sending. Transactions are irreversible. Do not send tokens on other networks just because they use the same `0x` address.
 
-Only use donation addresses published in this repository. Never send funds to addresses posted by strangers claiming to represent ByTelli.
+Only use donation addresses published in this repository. Never send funds to addresses posted by strangers claiming to represent Byblack.
 
 ## Project links
 
