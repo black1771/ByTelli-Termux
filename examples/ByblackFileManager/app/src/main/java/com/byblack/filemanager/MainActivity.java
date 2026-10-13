@@ -1,178 +1,39 @@
 package com.byblack.filemanager;
+import android.app.*;import android.os.*;import android.content.*;import android.graphics.*;import android.graphics.drawable.*;import android.net.Uri;import android.provider.DocumentsContract;import android.view.*;import android.widget.*;import java.text.*;import java.util.*;
 
-import android.app.*;
-import android.os.*;
-import android.content.*;
-import android.graphics.Color;
-import android.net.Uri;
-import android.provider.DocumentsContract;
-import android.view.*;
-import android.widget.*;
-import java.text.*;
-import java.util.*;
-
-public class MainActivity extends Activity {
-    private static final int OPEN_TREE=7;
-    private LinearLayout list;
-    private TextView path,status;
-    private Uri current;
-    private final ArrayDeque<Uri> history=new ArrayDeque<>();
-    private final ArrayList<Item> items=new ArrayList<>();
-    private String filter="";
-    private int sortMode=0;
-
-    static class Item {
-        Uri uri; String name,mime; long size,modified; boolean dir;
-        Item(Uri u,String n,String m,long s,long mod,boolean d){uri=u;name=n;mime=m;size=s;modified=mod;dir=d;}
-    }
-
-    @Override public void onCreate(Bundle b){
-        super.onCreate(b);
-        LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(18,18,18,18); root.setBackgroundColor(Color.rgb(7,14,22));
-
-        TextView title=new TextView(this); title.setText("BYBLACK FILE MANAGER V2"); title.setTextColor(Color.CYAN);
-        title.setTextSize(22); title.setPadding(0,8,0,10); root.addView(title);
-
-        LinearLayout bar=new LinearLayout(this);
-        Button choose=button("STORAGE"); choose.setOnClickListener(v->chooseTree());
-        Button back=button("BACK"); back.setOnClickListener(v->goBack());
-        Button mkdir=button("+ FOLDER"); mkdir.setOnClickListener(v->newFolder());
-        Button sort=button("SORT"); sort.setOnClickListener(v->chooseSort());
-        bar.addView(choose);bar.addView(back);bar.addView(mkdir);bar.addView(sort);root.addView(bar);
-
-        EditText search=new EditText(this); search.setHint("Search files...");
-        search.setTextColor(Color.WHITE); search.setHintTextColor(Color.GRAY);
-        search.setSingleLine(true); root.addView(search);
-        search.addTextChangedListener(new android.text.TextWatcher(){
-            public void beforeTextChanged(CharSequence s,int a,int c,int d){}
-            public void onTextChanged(CharSequence s,int a,int b,int c){filter=s.toString().toLowerCase(Locale.ROOT);render();}
-            public void afterTextChanged(android.text.Editable e){}
-        });
-
-        path=new TextView(this); path.setTextColor(Color.LTGRAY); path.setPadding(0,10,0,8); root.addView(path);
-        status=new TextView(this); status.setTextColor(Color.GRAY); status.setPadding(0,0,0,8); root.addView(status);
-
-        ScrollView scroll=new ScrollView(this);
-        list=new LinearLayout(this); list.setOrientation(LinearLayout.VERTICAL); scroll.addView(list);
-        root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-        setContentView(root);
-
-        Uri saved=b==null?null:(Uri)b.getParcelable("current");
-        if(saved!=null){current=saved;load(current);} else path.setText("Tap STORAGE and select Internal storage.");
-    }
-
-    private Button button(String s){Button b=new Button(this);b.setText(s);b.setTextSize(11);return b;}
-    private void chooseTree(){startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),OPEN_TREE);}
-
-    @Override protected void onActivityResult(int r,int c,Intent d){
-        super.onActivityResult(r,c,d);
-        if(r==OPEN_TREE&&c==RESULT_OK&&d!=null){
-            current=d.getData();
-            int flags=d.getFlags()&(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            try{getContentResolver().takePersistableUriPermission(current,flags);}catch(Exception ignored){}
-            history.clear();load(current);
-        }
-    }
-
-    private void load(Uri tree){
-        items.clear();
-        String id=DocumentsContract.getTreeDocumentId(tree);
-        path.setText("📂 "+prettyPath(id));
-        Uri children=DocumentsContract.buildChildDocumentsUriUsingTree(tree,id);
-        String[] cols={DocumentsContract.Document.COLUMN_DOCUMENT_ID,DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-                DocumentsContract.Document.COLUMN_MIME_TYPE,DocumentsContract.Document.COLUMN_SIZE,
-                DocumentsContract.Document.COLUMN_LAST_MODIFIED};
-        try(android.database.Cursor c=getContentResolver().query(children,cols,null,null,null)){
-            if(c!=null)while(c.moveToNext()){
-                String did=c.getString(0),name=c.getString(1),mime=c.getString(2);
-                long size=c.isNull(3)?-1:c.getLong(3),mod=c.isNull(4)?0:c.getLong(4);
-                Uri u=DocumentsContract.buildDocumentUriUsingTree(tree,did);
-                boolean dir=DocumentsContract.Document.MIME_TYPE_DIR.equals(mime);
-                items.add(new Item(u,name,mime,size,mod,dir));
-            }
-            render();
-        }catch(Exception e){Toast.makeText(this,"Cannot read: "+e.getMessage(),Toast.LENGTH_LONG).show();}
-    }
-
-    private void render(){
-        list.removeAllViews();
-        ArrayList<Item> shown=new ArrayList<>();
-        for(Item x:items)if(filter.length()==0||x.name.toLowerCase(Locale.ROOT).contains(filter))shown.add(x);
-        Collections.sort(shown,(a,b)->{
-            if(a.dir!=b.dir)return a.dir?-1:1;
-            if(sortMode==1)return Long.compare(b.modified,a.modified);
-            if(sortMode==2)return Long.compare(b.size,a.size);
-            return a.name.compareToIgnoreCase(b.name);
-        });
-        status.setText(shown.size()+" items  •  "+(sortMode==0?"Name":sortMode==1?"Newest":"Size"));
-        for(Item x:shown){
-            LinearLayout row=new LinearLayout(this);row.setOrientation(LinearLayout.VERTICAL);
-            row.setPadding(14,14,14,14);
-            TextView n=new TextView(this);n.setText(icon(x)+"  "+x.name);n.setTextColor(Color.WHITE);n.setTextSize(17);
-            TextView meta=new TextView(this);meta.setText(x.dir?"Folder":human(x.size)+(x.modified>0?"  •  "+date(x.modified):""));
-            meta.setTextColor(Color.GRAY);meta.setTextSize(12);
-            row.addView(n);row.addView(meta);
-            row.setOnClickListener(v->{if(x.dir){history.push(current);current=x.uri;load(current);}else openFile(x.uri,x.mime);});
-            row.setOnLongClickListener(v->{actions(x);return true;});
-            list.addView(row);
-            View line=new View(this);line.setBackgroundColor(Color.rgb(35,45,55));list.addView(line,new LinearLayout.LayoutParams(-1,1));
-        }
-    }
-
-    private String icon(Item x){
-        if(x.dir)return "📁";
-        String n=x.name.toLowerCase(Locale.ROOT);
-        if(n.endsWith(".apk"))return "📦";
-        if(n.endsWith(".zip")||n.endsWith(".rar")||n.endsWith(".7z"))return "🗜";
-        if(n.endsWith(".jpg")||n.endsWith(".jpeg")||n.endsWith(".png")||n.endsWith(".webp"))return "🖼";
-        if(n.endsWith(".mp4")||n.endsWith(".mkv")||n.endsWith(".avi"))return "🎬";
-        if(n.endsWith(".mp3")||n.endsWith(".wav")||n.endsWith(".flac"))return "🎵";
-        if(n.endsWith(".pdf"))return "📕";
-        return "📄";
-    }
-    private String human(long n){if(n<0)return "";if(n<1024)return n+" B";if(n<1048576)return String.format(Locale.US,"%.1f KB",n/1024.0);if(n<1073741824)return String.format(Locale.US,"%.1f MB",n/1048576.0);return String.format(Locale.US,"%.2f GB",n/1073741824.0);}
-    private String date(long t){return new SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault()).format(new Date(t));}
-    private String prettyPath(String id){int p=id.indexOf(':');return p>=0?"Internal storage/"+id.substring(p+1):id;}
-
-    private void chooseSort(){
-        new AlertDialog.Builder(this).setTitle("Sort").setItems(new String[]{"Name A-Z","Newest first","Largest first"},(d,w)->{sortMode=w;render();}).show();
-    }
-    private void openFile(Uri u,String mime){
-        try{Intent i=new Intent(Intent.ACTION_VIEW).setDataAndType(u,mime==null?"*/*":mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivity(i);}
-        catch(Exception e){Toast.makeText(this,"No app can open this file",Toast.LENGTH_SHORT).show();}
-    }
-    private void actions(Item x){
-        new AlertDialog.Builder(this).setTitle(x.name).setItems(new String[]{"Rename","Delete","Share"},(d,w)->{
-            if(w==0)rename(x);else if(w==1)delete(x);else share(x);
-        }).show();
-    }
-    private void rename(Item x){
-        EditText e=new EditText(this);e.setText(x.name);
-        new AlertDialog.Builder(this).setTitle("Rename").setView(e).setPositiveButton("SAVE",(d,w)->{
-            String n=e.getText().toString().trim();if(n.isEmpty())return;
-            try{DocumentsContract.renameDocument(getContentResolver(),x.uri,n);load(current);}catch(Exception z){Toast.makeText(this,"Rename failed",Toast.LENGTH_SHORT).show();}
-        }).setNegativeButton("CANCEL",null).show();
-    }
-    private void delete(Item x){
-        new AlertDialog.Builder(this).setTitle("Delete "+x.name+"?").setMessage("This cannot be undone.")
-        .setPositiveButton("DELETE",(d,w)->{try{DocumentsContract.deleteDocument(getContentResolver(),x.uri);load(current);}catch(Exception e){Toast.makeText(this,"Delete failed",Toast.LENGTH_SHORT).show();}})
-        .setNegativeButton("CANCEL",null).show();
-    }
-    private void share(Item x){
-        if(x.dir){Toast.makeText(this,"Folder sharing is not supported",Toast.LENGTH_SHORT).show();return;}
-        try{Intent i=new Intent(Intent.ACTION_SEND);i.setType(x.mime==null?"*/*":x.mime);i.putExtra(Intent.EXTRA_STREAM,x.uri);i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivity(Intent.createChooser(i,"Share file"));}
-        catch(Exception e){Toast.makeText(this,"Share failed",Toast.LENGTH_SHORT).show();}
-    }
-    private void newFolder(){
-        if(current==null){Toast.makeText(this,"Select storage first",Toast.LENGTH_SHORT).show();return;}
-        EditText e=new EditText(this);
-        new AlertDialog.Builder(this).setTitle("New folder").setView(e).setPositiveButton("CREATE",(d,w)->{
-            String n=e.getText().toString().trim();if(n.isEmpty())return;
-            try{DocumentsContract.createDocument(getContentResolver(),current,DocumentsContract.Document.MIME_TYPE_DIR,n);load(current);}catch(Exception z){Toast.makeText(this,"Create failed",Toast.LENGTH_SHORT).show();}
-        }).setNegativeButton("CANCEL",null).show();
-    }
-    private void goBack(){if(!history.isEmpty()){current=history.pop();load(current);}}
-    @Override public void onBackPressed(){if(!history.isEmpty())goBack();else super.onBackPressed();}
-    @Override protected void onSaveInstanceState(Bundle b){super.onSaveInstanceState(b);b.putParcelable("current",current);}
+public class MainActivity extends Activity{
+ static final int PICK=7; final int BG=Color.rgb(8,9,11),CARD=Color.rgb(22,23,27),RED=Color.rgb(255,45,45); LinearLayout body; TextView title,sub; Uri root,current; ArrayDeque<Uri> hist=new ArrayDeque<>(); ArrayList<Item> data=new ArrayList<>(); String q=""; int sort=0;
+ static class Item{Uri u;String n,m;long s,t;boolean d;Item(Uri U,String N,String M,long S,long T,boolean D){u=U;n=N;m=M;s=S;t=T;d=D;}}
+ public void onCreate(Bundle b){super.onCreate(b);home();}
+ TextView tx(String s,float z,int col){TextView v=new TextView(this);v.setText(s);v.setTextSize(z);v.setTextColor(col);v.setPadding(dp(14),dp(12),dp(14),dp(12));return v;}
+ GradientDrawable bg(int color,int r){GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(dp(r));return g;}
+ int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+.5f);}
+ LinearLayout base(){LinearLayout x=new LinearLayout(this);x.setOrientation(LinearLayout.VERTICAL);x.setBackgroundColor(BG);x.setPadding(dp(14),dp(10),dp(14),dp(8));return x;}
+ void header(LinearLayout x,String a,String b){LinearLayout h=new LinearLayout(this);h.setGravity(Gravity.CENTER_VERTICAL);TextView logo=tx("B",25,RED);logo.setGravity(Gravity.CENTER);logo.setTypeface(null,1);logo.setBackground(bg(Color.rgb(18,18,20),12));h.addView(logo,new LinearLayout.LayoutParams(dp(52),dp(52)));LinearLayout z=new LinearLayout(this);z.setOrientation(LinearLayout.VERTICAL);title=tx(a,20,Color.WHITE);title.setTypeface(null,1);title.setPadding(dp(12),0,0,0);sub=tx(b,12,Color.GRAY);sub.setPadding(dp(12),0,0,0);z.addView(title);z.addView(sub);h.addView(z,new LinearLayout.LayoutParams(0,-2,1));x.addView(h);}
+ void home(){LinearLayout x=base();header(x,"Byblack","File Manager");ScrollView sv=new ScrollView(this);body=new LinearLayout(this);body.setOrientation(LinearLayout.VERTICAL);sv.addView(body);x.addView(sv,new LinearLayout.LayoutParams(-1,0,1));storageCard();section("Kategoriler");LinearLayout grid=new LinearLayout(this);grid.setOrientation(LinearLayout.VERTICAL);grid.addView(pair("🖼  Resimler","🎬  Videolar"));grid.addView(pair("🎵  Müzik","📄  Belgeler"));grid.addView(pair("📦  APK","🗜  Arşivler"));grid.addView(pair("⬇  İndirilenler","★  Favoriler"));body.addView(grid);section("Hızlı erişim");action("📁  Dahili Depolama","Klasörleri ve dosyaları görüntüle",v->pick());action("🔎  Dosya Ara","Depolama içinde hızlı arama",v->{if(current!=null)browser(current);else pick();});action("⚙  Araçlar","Dosya işlemleri ve sıralama",v->Toast.makeText(this,"Klasör ekranında uzun basarak dosya işlemlerini aç.",0).show());bottom(x);setContentView(x);}
+ void storageCard(){LinearLayout c=new LinearLayout(this);c.setOrientation(LinearLayout.VERTICAL);c.setPadding(dp(18),dp(14),dp(18),dp(14));c.setBackground(bg(CARD,18));TextView a=tx("DAHİLİ DEPOLAMA",12,Color.LTGRAY);TextView b=tx("Depolamayı aç",24,Color.WHITE);b.setTypeface(null,1);TextView d=tx("Klasörler • Medya • APK • Belgeler",13,Color.GRAY);c.addView(a);c.addView(b);c.addView(d);c.setOnClickListener(v->pick());body.addView(c,new LinearLayout.LayoutParams(-1,dp(120)));}
+ void section(String s){TextView v=tx(s,16,Color.WHITE);v.setTypeface(null,1);v.setPadding(0,dp(20),0,dp(8));body.addView(v);}
+ LinearLayout pair(String a,String b){LinearLayout r=new LinearLayout(this);r.addView(tile(a),new LinearLayout.LayoutParams(0,dp(72),1));Space sp=new Space(this);r.addView(sp,new LinearLayout.LayoutParams(dp(8),1));r.addView(tile(b),new LinearLayout.LayoutParams(0,dp(72),1));r.setPadding(0,0,0,dp(8));return r;}
+ TextView tile(String s){TextView v=tx(s,15,Color.WHITE);v.setGravity(Gravity.CENTER_VERTICAL);v.setBackground(bg(CARD,14));v.setOnClickListener(w->{if(current!=null)browser(current);else pick();});return v;}
+ void action(String a,String b,View.OnClickListener l){LinearLayout r=new LinearLayout(this);r.setOrientation(LinearLayout.VERTICAL);r.setPadding(dp(5),dp(3),dp(5),dp(3));TextView n=tx(a,16,Color.WHITE),m=tx(b,12,Color.GRAY);n.setPadding(dp(12),dp(8),dp(12),0);m.setPadding(dp(12),0,dp(12),dp(8));r.addView(n);r.addView(m);r.setBackground(bg(CARD,14));r.setOnClickListener(l);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.setMargins(0,0,0,dp(8));body.addView(r,p);}
+ void bottom(LinearLayout x){LinearLayout b=new LinearLayout(this);b.setGravity(Gravity.CENTER);String[] n={"⌂\nAna Ekran","□\nKlasörler","⋮\nAraçlar"};for(int i=0;i<3;i++){TextView v=tx(n[i],12,i==0?RED:Color.LTGRAY);v.setGravity(Gravity.CENTER);final int k=i;v.setOnClickListener(w->{if(k==0)home();else if(k==1){if(current!=null)browser(current);else pick();}else Toast.makeText(this,"Byblack Araçlar",0).show();});b.addView(v,new LinearLayout.LayoutParams(0,dp(62),1));}x.addView(b);}
+ void pick(){startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),PICK);}
+ protected void onActivityResult(int r,int c,Intent d){super.onActivityResult(r,c,d);if(r==PICK&&c==RESULT_OK&&d!=null){root=current=d.getData();try{getContentResolver().takePersistableUriPermission(current,d.getFlags()&(3));}catch(Exception e){}hist.clear();browser(current);}}
+ void browser(Uri u){current=u;LinearLayout x=base();header(x,"Dosyalar",path(u));LinearLayout tools=new LinearLayout(this);String[] bs={"‹","⌕","+","↕"};for(String s:bs){TextView v=tx(s,22,Color.WHITE);v.setGravity(Gravity.CENTER);v.setBackground(bg(CARD,12));tools.addView(v,new LinearLayout.LayoutParams(0,dp(52),1));if(s.equals("‹"))v.setOnClickListener(w->back());if(s.equals("+"))v.setOnClickListener(w->mkdir());if(s.equals("↕"))v.setOnClickListener(w->sort());if(s.equals("⌕"))v.setOnClickListener(w->search());}x.addView(tools);ScrollView sv=new ScrollView(this);body=new LinearLayout(this);body.setOrientation(LinearLayout.VERTICAL);sv.addView(body);x.addView(sv,new LinearLayout.LayoutParams(-1,0,1));bottom(x);setContentView(x);load();}
+ void load(){data.clear();try{String id=DocumentsContract.getDocumentId(current);Uri ch=DocumentsContract.buildChildDocumentsUriUsingTree(current,id);String[] p={DocumentsContract.Document.COLUMN_DOCUMENT_ID,DocumentsContract.Document.COLUMN_DISPLAY_NAME,DocumentsContract.Document.COLUMN_MIME_TYPE,DocumentsContract.Document.COLUMN_SIZE,DocumentsContract.Document.COLUMN_LAST_MODIFIED};try(android.database.Cursor c=getContentResolver().query(ch,p,null,null,null)){while(c!=null&&c.moveToNext()){String did=c.getString(0),n=c.getString(1),m=c.getString(2);long s=c.isNull(3)?-1:c.getLong(3),t=c.isNull(4)?0:c.getLong(4);data.add(new Item(DocumentsContract.buildDocumentUriUsingTree(current,did),n,m,s,t,DocumentsContract.Document.MIME_TYPE_DIR.equals(m)));}}render();}catch(Exception e){Toast.makeText(this,"Okunamadı: "+e.getMessage(),1).show();}}
+ void render(){body.removeAllViews();ArrayList<Item>a=new ArrayList<>();for(Item i:data)if(q.isEmpty()||i.n.toLowerCase().contains(q))a.add(i);Collections.sort(a,(i,j)->{if(i.d!=j.d)return i.d?-1:1;if(sort==1)return Long.compare(j.t,i.t);if(sort==2)return Long.compare(j.s,i.s);return i.n.compareToIgnoreCase(j.n);});for(Item i:a){LinearLayout r=new LinearLayout(this);r.setGravity(Gravity.CENTER_VERTICAL);r.setPadding(dp(10),dp(7),dp(5),dp(7));TextView ic=tx(icon(i),25,Color.WHITE);r.addView(ic,new LinearLayout.LayoutParams(dp(52),-2));LinearLayout z=new LinearLayout(this);z.setOrientation(LinearLayout.VERTICAL);TextView n=tx(i.n,16,Color.WHITE);n.setPadding(0,0,0,0);TextView m=tx(i.d?"Klasör":size(i.s)+(i.t>0?"  •  "+date(i.t):""),12,Color.GRAY);m.setPadding(0,0,0,0);z.addView(n);z.addView(m);r.addView(z,new LinearLayout.LayoutParams(0,dp(58),1));TextView more=tx("⋮",24,Color.LTGRAY);more.setGravity(Gravity.CENTER);r.addView(more,new LinearLayout.LayoutParams(dp(48),dp(52)));r.setOnClickListener(v->{if(i.d){hist.push(current);browser(i.u);}else open(i);});View.OnClickListener menu=v->menu(i);more.setOnClickListener(menu);r.setOnLongClickListener(v->{menu.onClick(v);return true;});body.addView(r);}}
+ String icon(Item i){if(i.d)return"📁";String n=i.n.toLowerCase();if(n.endsWith(".apk"))return"📦";if(n.matches(".*\\.(jpg|jpeg|png|webp)$"))return"🖼";if(n.matches(".*\\.(mp4|mkv|avi)$"))return"🎬";if(n.matches(".*\\.(mp3|wav|flac)$"))return"🎵";if(n.endsWith(".pdf"))return"📕";if(n.matches(".*\\.(zip|rar|7z)$"))return"🗜";return"📄";}
+ void search(){final EditText e=new EditText(this);e.setHint("Dosya ara");new AlertDialog.Builder(this).setTitle("Ara").setView(e).setPositiveButton("ARA",(d,w)->{q=e.getText().toString().toLowerCase();render();}).setNeutralButton("TEMİZLE",(d,w)->{q="";render();}).show();}
+ void sort(){new AlertDialog.Builder(this).setTitle("Sırala").setItems(new String[]{"Ada göre","En yeni","Boyuta göre"},(d,w)->{sort=w;render();}).show();}
+ void menu(Item i){new AlertDialog.Builder(this).setTitle(i.n).setItems(new String[]{"Aç","Yeniden adlandır","Paylaş","Detaylar","Sil"},(d,w)->{if(w==0){if(i.d){hist.push(current);browser(i.u);}else open(i);}else if(w==1)rename(i);else if(w==2)share(i);else if(w==3)new AlertDialog.Builder(this).setTitle("Dosya Detayları").setMessage("Ad: "+i.n+"\nTür: "+i.m+"\nBoyut: "+size(i.s)+"\nTarih: "+date(i.t)).setPositiveButton("TAMAM",null).show();else del(i);}).show();}
+ void rename(Item i){EditText e=new EditText(this);e.setText(i.n);new AlertDialog.Builder(this).setTitle("Yeniden adlandır").setView(e).setPositiveButton("KAYDET",(d,w)->{try{DocumentsContract.renameDocument(getContentResolver(),i.u,e.getText().toString().trim());load();}catch(Exception z){}}).setNegativeButton("İPTAL",null).show();}
+ void del(Item i){new AlertDialog.Builder(this).setTitle("Silinsin mi?").setMessage(i.n).setPositiveButton("SİL",(d,w)->{try{DocumentsContract.deleteDocument(getContentResolver(),i.u);load();}catch(Exception z){}}).setNegativeButton("İPTAL",null).show();}
+ void mkdir(){EditText e=new EditText(this);new AlertDialog.Builder(this).setTitle("Yeni klasör").setView(e).setPositiveButton("OLUŞTUR",(d,w)->{try{DocumentsContract.createDocument(getContentResolver(),current,DocumentsContract.Document.MIME_TYPE_DIR,e.getText().toString().trim());load();}catch(Exception z){}}).setNegativeButton("İPTAL",null).show();}
+ void open(Item i){try{startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(i.u,i.m).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION));}catch(Exception e){Toast.makeText(this,"Bu dosyayı açacak uygulama yok.",0).show();}}
+ void share(Item i){if(i.d)return;Intent x=new Intent(Intent.ACTION_SEND);x.setType(i.m);x.putExtra(Intent.EXTRA_STREAM,i.u);x.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivity(Intent.createChooser(x,"Paylaş"));}
+ void back(){if(!hist.isEmpty())browser(hist.pop());else home();}
+ public void onBackPressed(){if(current!=null&&!hist.isEmpty())back();else home();}
+ String path(Uri u){try{return "Dahili Depolama / "+DocumentsContract.getDocumentId(u).replace("primary:","");}catch(Exception e){return"Dahili Depolama";}}
+ String size(long n){if(n<0)return"";if(n<1024)return n+" B";if(n<1048576)return String.format(Locale.US,"%.1f KB",n/1024d);if(n<1073741824)return String.format(Locale.US,"%.1f MB",n/1048576d);return String.format(Locale.US,"%.1f GB",n/1073741824d);}
+ String date(long t){return t<=0?"-":new SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault()).format(new Date(t));}
 }
