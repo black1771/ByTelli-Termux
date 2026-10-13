@@ -37,6 +37,14 @@ Screenshots captured on the phone running the published V1.0 app.
 
 **Important:** V1.0 is an **example application** and source-code editor, **not** an on-device compiler or full APK-building IDE. The published APK is a **debug build**, not a production-signed Play Store release. Review source and verify downloads before installing.
 
+## 📂 Example app: Byblack File Manager V1
+
+A second real Android Java example is now included: **[Byblack File Manager V1](examples/ByblackFileManager)**.
+
+It uses Android's Storage Access Framework instead of broad storage permission. V1 can browse folders, open files, create folders, rename items and delete with confirmation. Long-press an item for file actions.
+
+> Test destructive file operations on non-important files first.
+
 ## 🛠️ Build Android APKs using standard Termux
 
 This repository also documents how to compile Android apps **inside regular Termux**, without a PC or a custom Termux fork.
