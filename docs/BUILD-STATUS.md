@@ -19,7 +19,7 @@
 | APK | `app/build/outputs/apk/debug/app-debug.apk` |
 | Install and launch | Confirmed by user screenshot |
 
-**Important / Onemli:** The checked-in example still specifies `compileSdk 35`. The successful build used a **local change to 34**, not the unmodified repository. File open/create/save buttons are visible but their behavior has **not yet been functionally tested**. This is one-device validation, not universal compatibility.
+**Important / Onemli:** The checked-in example still specifies `compileSdk 35`. The successful build used a **local change to 34**, not the unmodified repository. The user has now confirmed an end-to-end text-file workflow: enter English text, save as a new text file, and reopen it successfully. Other editor edge cases remain untested. This is one-device validation, not universal compatibility.
 
 ## Encountered issues / Karsilasilan hatalar
 
@@ -30,7 +30,7 @@
 
 ## Remaining work / Kalan isler
 
-1. Test file open/create/save on device and fix any bugs.
+1. Expand file open/create/save testing (large files, Unicode, edits to existing files) and fix any bugs.
 2. Update example build configuration to the verified SDK 34 baseline while documenting SDK 35 limitations.
 3. Produce a repeatable from-scratch installation guide for Android SDK and ARM64 tools.
 4. Test on other devices and review third-party redistribution licensing.
