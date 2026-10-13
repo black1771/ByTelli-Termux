@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application android:theme="@style/AppTheme" android:label="Byblack File Manager" android:allowBackup="false">
+    <application android:theme="@style/AppTheme" android:label="Byblack File Manager" android:allowBackup="false" android:icon="@drawable/byblack_icon">
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
