@@ -1,24 +1,26 @@
 # Build status / Derleme durumu
 
-## English
-This repository currently contains documentation and a read-only diagnostic script. **It does not yet contain the complete ByTelli-Termux Android application source or a verified release APK.** Do not treat it as a ready-to-build application.
+## Current scope / Güncel kapsam
+This repository now documents **standard Termux** Android development on a phone. A custom ByTelli-Termux APK is **not required**.
 
-Development history reported for the independent Android package:
-- Package ID: `com.vedat.bytellitermux`
-- Prefix: `/data/data/com.vedat.bytellitermux/files/usr`
-- Target: ARM64 / aarch64
-- Experimented with: Java 21, Gradle, Python, C/C++, clang, CMake, make, apt/dpkg.
+Bu depo artık telefonda **normal Termux** ile Android geliştirme rehberine odaklanır. Özel ByTelli-Termux APK'sı **gerekli değildir**.
 
-These details describe the development environment; they are not independently reproducible from the files currently published here.
+## What is available / Mevcut olanlar
+- Bilingual setup and APK build documentation / Türkçe-İngilizce kurulum ve APK derleme rehberi
+- A read-only diagnostic script / Salt okunur ortam kontrol betiği
+- GitHub issue and pull request templates / Hata ve katkı şablonları
 
-### Before publishing a build
-1. Add the actual Android project source and Gradle wrapper/configuration.
-2. Document dependencies, patches and third-party license obligations.
-3. Check for hardcoded secrets, private keys, credentials and private paths.
-4. Test a clean build on a supported ARM64 Android device.
-5. Publish a signed release only with an appropriate signing/security plan.
+## What is not yet verified / Henüz doğrulanmayanlar
+- A universally reproducible Android SDK + ARM64 aapt2 installation for standard Termux
+- A complete sample Android app and end-to-end APK build using only this repository
+- A prebuilt or supported APK release
 
-## Türkçe
-Depoda şu anda belgeler ve yalnızca bilgi okuyan bir kontrol betiği bulunmaktadır. **Uygulamanın eksiksiz Android kaynak kodları ve doğrulanmış APK sürümü henüz yayımlanmamıştır.** Bu dosyalardan doğrudan APK üretilebildiği iddia edilmemektedir.
+These limitations are intentional: contributors should not mistake a proposed workflow for a tested universal solution.
 
-Gerçek kaynaklar eklendikten sonra Gradle yapılandırması, bağımlılıklar, üçüncü taraf lisansları ve temiz cihazda derleme testi belgelenmelidir.
+Bu sınırlamalar açıkça belirtilmiştir: Önerilen adımlar, bütün telefonlarda test edilmiş kesin çözüm olarak sunulmaz.
+
+## Next milestones / Sonraki hedefler
+1. Document a verified ARM64 aapt2/Android SDK setup.
+2. Add a minimal Android app example and record a clean build.
+3. Publish tested device/Android/Gradle compatibility notes.
+4. Review licensing of all third-party dependencies before redistribution.
