@@ -1,7 +1,7 @@
 # Android APK from zero to installed — Standard Termux (ARM64)
 # Sıfırdan telefonda APK üretme ve kurma
 
-> **Tested reference:** ByTelli Developer Lab V1.0 was built, installed and opened on one Samsung ARM64 Android 16 phone using standard Termux, OpenJDK 25, Gradle 9.6, AGP 8.7.3, SDK platform 34 and Termux-native AAPT2. **Other devices are not guaranteed.**
+> **Tested reference:** Byblack Developer Lab V1.0 was built, installed and opened on one Samsung ARM64 Android 16 phone using standard Termux, OpenJDK 25, Gradle 9.6, AGP 8.7.3, SDK platform 34 and Termux-native AAPT2. **Other devices are not guaranteed.**
 >
 > **Önemli:** Bu rehber Android ARM64 içindir. Android SDK'nın Google tarafından sunulan bazı araçları Linux x86_64 içindir; Android telefonunda doğrudan çalışmayabilir. Özellikle ARM64 `aapt2` gereklidir. Buradaki komutları sırayla uygulayın; kurulum paketlerinin kullanılabilirliği Termux sürümüne göre değişebilir.
 
@@ -115,7 +115,7 @@ If already cloned, use `cd "$HOME/ByTelli-Termux" && git pull` rather than cloni
 
 ## 6 — Connect SDK and ARM64 AAPT2 / SDK ve AAPT2 ayarları
 
-From **the `ByTelliDeveloperLabV1` project directory**:
+From **the `ByblackDeveloperLabV1` project directory**:
 
 ```sh
 export JAVA_HOME="$PREFIX/lib/jvm/java-25-openjdk"
@@ -165,8 +165,8 @@ This project currently uses **`compileSdk 34`**. Do not change it to 35/36 merel
 termux-setup-storage
 mkdir -p "$HOME/storage/downloads"
 cp app/build/outputs/apk/debug/app-debug.apk \
-  "$HOME/storage/downloads/ByTelliDeveloperLab-V1-debug.apk"
-ls -lh "$HOME/storage/downloads/ByTelliDeveloperLab-V1-debug.apk"
+  "$HOME/storage/downloads/ByblackDeveloperLab-V1-debug.apk"
+ls -lh "$HOME/storage/downloads/ByblackDeveloperLab-V1-debug.apk"
 ```
 
 **Do not use `mkdir` on `/storage/emulated/0` or change its permissions.** If storage permission is denied, enable Termux storage access in Android Settings.
@@ -175,7 +175,7 @@ ls -lh "$HOME/storage/downloads/ByTelliDeveloperLab-V1-debug.apk"
 
 1. Open Android **My Files / Dosyalarım**.
 2. Go to **Downloads / İndirilenler**.
-3. Tap `ByTelliDeveloperLab-V1-debug.apk`.
+3. Tap `ByblackDeveloperLab-V1-debug.apk`.
 4. If Android asks, allow **Install unknown apps** for the file manager you are using; only grant this to a trusted installer.
 5. Confirm installation, then tap **Open / Aç**.
 6. Create a project, create `Main.java`, save, close the app, reopen and verify persistence.
@@ -195,5 +195,5 @@ Open the downloaded APK in your file manager and install it. The application is 
 This is a **reproducible reference for one tested ARM64 Android 16 setup**, not a universal automatic SDK installer. If you complete the guide, please report your device model, Android version, `uname -m`, `java -version`, `gradle --version`, `aapt2 version`, and whether the APK installed successfully. **Never post private keys, tokens, signing secrets or personal files.**
 
 - [Report installation problems](https://github.com/black1771/ByTelli-Termux/issues/new)
-- [ByTelli source code](https://github.com/black1771/ByTelli-Termux)
+- [Byblack source code](https://github.com/black1771/ByTelli-Termux)
 - [Support the project](../SUPPORT.md)
