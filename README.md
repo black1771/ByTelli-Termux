@@ -23,7 +23,9 @@ A dark-themed scientific calculator built on an Android phone with Termux. The s
   <img src="Screenshot_20261015_165133.jpg" alt="ByBlack Calculator V2 scientific calculator screenshot on Android" width="320">
 </p>
 
-**Türkçe:** ByBlack Calculator V2, telefonda Termux kullanılarak geliştirilen koyu temalı bilimsel hesap makinesi örneğidir. Yukarıdaki görüntü uygulamanın gerçek Android ekran görüntüsüdür. APK ve kaynak kod bu bölümden ayrıca yayımlanmış değildir.
+**[📁 View source code / Kaynak kodu](examples/ByBlackCalculator)** · **[🛠 Build instructions / Derleme rehberi](examples/ByBlackCalculator/README.md)**
+
+**Türkçe:** ByBlack Calculator V2'nin Java kaynak kodu ve derleme dosyaları yayımlandı. Ekran görüntüsü gerçek Android cihazından alınmıştır. APK henüz bu bölümde yayımlanmadı; derleme için Android SDK 35 ve uygun Gradle/AAPT2 kurulumu gerekir.
 
 ## 📱 Example app: Byblack Developer Lab V1.0
 
