@@ -1,0 +1,59 @@
+name: Android 13-15 APK smoke test
+
+# Manual only: no automatic runs on pushes or pull requests.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  emulator-smoke:
+    name: Android ${{ matrix.api-level }} smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [33, 34, 35]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21 (Linux CI only)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle 9.6.0
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.6.0'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Android emulator install and launch
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-boot-timeout: 600
+          script: |
+            set -e
+            cd examples/ByTelliDeveloperLabV1
+            gradle --no-daemon assembleDebug
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n com.bytelli.developerlab/.MainActivity
+            sleep 5
+            adb shell pidof com.bytelli.developerlab | grep -Eq '[0-9]+' || { echo 'App did not remain running'; exit 1; }
+            echo "APK installed and app process running on API ${{ matrix.api-level }}"
+
+      - name: Scope of test
+        if: always()
+        run: |
+          echo "This is a basic install/start smoke test, not a complete feature or Bluetooth compatibility test."
