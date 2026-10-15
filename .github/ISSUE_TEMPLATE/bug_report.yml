@@ -1,0 +1,72 @@
+name: "Bug report / Hata bildirimi"
+description: "Report a reproducible issue / Tekrarlanabilir bir sorunu bildir"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please do not post passwords, wallet keys, access tokens or private logs.
+        Teşekkürler! Şifre, cüzdan anahtarı, erişim tokenı veya özel log paylaşmayın.
+  - type: dropdown
+    id: component
+    attributes:
+      label: "Affected component / Sorunlu bölüm"
+      options:
+        - "Developer Lab APK"
+        - "Termux setup / Kurulum"
+        - "APK build / Derleme"
+        - "GitHub Actions emulator test"
+        - "File Manager example"
+        - "Other / Diğer"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: "Device model / Telefon modeli"
+      placeholder: "e.g. Samsung Galaxy S23 Ultra or GitHub emulator"
+    validations:
+      required: true
+  - type: input
+    id: android
+    attributes:
+      label: "Android version / Android sürümü"
+      placeholder: "e.g. Android 16 / API 36"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: "Steps to reproduce / Tekrarlama adımları"
+      description: "What did you do? / Ne yaptınız?"
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected behavior / Beklenen sonuç"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Actual behavior / Gerçekleşen sonuç"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Relevant error log / İlgili hata kaydı"
+      description: "Remove private information before sharing / Paylaşmadan önce özel bilgileri silin."
+      render: shell
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: "App version or commit / Uygulama sürümü veya commit"
+      placeholder: "e.g. v1.0.0"
+    validations:
+      required: false
