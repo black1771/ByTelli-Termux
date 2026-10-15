@@ -1,7 +1,7 @@
 # Android APK from zero to installed — Standard Termux (ARM64)
 # Sıfırdan telefonda APK üretme ve kurma
 
-> **Tested reference:** Byblack Developer Lab V1.0 was built, installed and opened on one Samsung ARM64 Android 16 phone using standard Termux, OpenJDK 25, Gradle 9.6, AGP 8.7.3, SDK platform 34 and Termux-native AAPT2. **Other devices are not guaranteed.**
+> **Tested reference:** Byblack Developer Lab V1.0 was built, installed and opened on one Samsung ARM64 Android 16 phone using standard Termux, OpenJDK 26.0.2, Gradle 9.6.0, AGP 8.7.3, SDK platform 34 and Termux-native AAPT2. **Other devices are not guaranteed.**
 >
 > **Önemli:** Bu rehber Android ARM64 içindir. Android SDK'nın Google tarafından sunulan bazı araçları Linux x86_64 içindir; Android telefonunda doğrudan çalışmayabilir. Özellikle ARM64 `aapt2` gereklidir. Buradaki komutları sırayla uygulayın; kurulum paketlerinin kullanılabilirliği Termux sürümüne göre değişebilir.
 
@@ -41,14 +41,14 @@ pkg search aapt2
 On a repository offering these packages, try:
 
 ```sh
-pkg install -y openjdk-25 gradle aapt2
+pkg install -y openjdk-26 gradle aapt2
 java -version
 gradle --version
 command -v aapt2
 aapt2 version
 ```
 
-**Stop if any required package is unavailable.** Use `pkg search` to locate an Android-compatible alternative and report the result in an [Issue](https://github.com/black1771/ByTelli-Termux/issues). Do **not** substitute an x86_64 Linux `aapt2`. The verified build used **Java 25.0.3** and **Gradle 9.6**; other versions may require adjustments. Java 21 crashed on the tested Android 16 phone, so it is not the verified baseline.
+**Stop if any required package is unavailable.** Use `pkg search` to locate an Android-compatible alternative and report the result in an [Issue](https://github.com/black1771/ByTelli-Termux/issues). Do **not** substitute an x86_64 Linux `aapt2`. The verified build used **Java 26.0.2** and **Gradle 9.6.0**; other versions may require adjustments. Java 21 failed with a native PerfettoTrace registration abort in one test; its root cause was not isolated. Java 26.0.2 and Gradle 9.6.0 subsequently built and launched the example APK successfully on the tested Android 16 phone.
 
 **Türkçe:** `openjdk-25`, `gradle` veya `aapt2` bulunamazsa rastgele paket indirip çalıştırmayın. Kurulumun kalanına geçmeden doğru Android ARM64 paketini bulun. Rehber henüz her Termux dağıtımı için otomatik kurulum garantisi vermez.
 
@@ -115,14 +115,14 @@ If already cloned, use `cd "$HOME/ByTelli-Termux" && git pull` rather than cloni
 
 ## 6 — Connect SDK and ARM64 AAPT2 / SDK ve AAPT2 ayarları
 
-From **the `ByblackDeveloperLabV1` project directory**:
+From **the `ByTelliDeveloperLabV1` project directory**:
 
 ```sh
-export JAVA_HOME="$PREFIX/lib/jvm/java-25-openjdk"
+export JAVA_HOME="$PREFIX/lib/jvm/java-26-openjdk"
 export PATH="$JAVA_HOME/bin:$PATH"
 export ANDROID_HOME="$HOME/android-sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
-test -x "$JAVA_HOME/bin/java" || { echo "Java 25 location missing"; exit 1; }
+test -x "$JAVA_HOME/bin/java" || { echo "Java 26 location missing"; exit 1; }
 test -x "$PREFIX/bin/aapt2" || { echo "Termux ARM64 aapt2 missing"; exit 1; }
 test -f "$ANDROID_HOME/platforms/android-34/android.jar" || { echo "SDK 34 missing"; exit 1; }
 printf 'sdk.dir=%s\n' "$ANDROID_HOME" > local.properties
