@@ -15,6 +15,16 @@ Byblack is an independent, experimental Android development project built and te
 
 > **What makes this different?** The development workflow runs on the phone itself — including Java, Gradle and Android SDK setup. No desktop computer was used for the verified Byblack Developer Lab build.
 
+## 🧮 ByBlack Calculator V2 — Scientific Calculator
+
+A dark-themed scientific calculator built on an Android phone with Termux. The screenshot below shows the V2 interface running on a real device, including trigonometric functions, logarithms, history, and a calculation example.
+
+<p align="center">
+  <img src="Screenshot_20261015_165133.jpg" alt="ByBlack Calculator V2 scientific calculator screenshot on Android" width="320">
+</p>
+
+**Türkçe:** ByBlack Calculator V2, telefonda Termux kullanılarak geliştirilen koyu temalı bilimsel hesap makinesi örneğidir. Yukarıdaki görüntü uygulamanın gerçek Android ekran görüntüsüdür. APK ve kaynak kod bu bölümden ayrıca yayımlanmış değildir.
+
 ## 📱 Example app: Byblack Developer Lab V1.0
 
 **Developer Lab V1.0 is the example/demo APK for this repository.** It demonstrates the documented phone-only Android development workflow. It is not required to use the build guide and it is not the Android SDK.
