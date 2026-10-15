@@ -1,6 +1,6 @@
 # ByBlack Calculator V2
 
-Scientific Android calculator built with Java, Android Gradle Plugin 8.7.3 and Android SDK 35.
+Scientific Android calculator built with Java, Android Gradle Plugin 8.7.3 and Android SDK 34.
 
 Features: dark UI, DEG/RAD trigonometry, square root, powers, logarithms, constants, percentages, saved calculation history and answer recall.
 
@@ -8,7 +8,7 @@ Features: dark UI, DEG/RAD trigonometry, square root, powers, logarithms, consta
 
 ## Build / Derleme
 
-Prerequisites: Java 17+ (compatible with your Gradle setup), Android SDK Platform 35, Android SDK build tools and Gradle 8.9+ or a compatible wrapper.
+Prerequisites: Java 17+ (compatible with your Gradle setup), Android SDK Platform 34, Android SDK build tools and Gradle 8.9+ or a compatible wrapper.
 
 From this directory, set `ANDROID_HOME` to your installed SDK, then run:
 
@@ -28,10 +28,47 @@ android.aapt2FromMavenOverride=/your/actual/path/to/aapt2
 
 Also create a local `local.properties` with `sdk.dir=/your/actual/android-sdk` if required.
 
-**Türkçe:** Android SDK 35, Java, Gradle ve ARM64 uyumlu AAPT2 gerekir. SDK ve AAPT2 yollarını kendi cihazına göre ayarla. Bu kaynak koddan üretilen APK test/debug sürümüdür.
+**Türkçe:** Android SDK 34, Java, Gradle ve ARM64 uyumlu AAPT2 gerekir. SDK ve AAPT2 yollarını kendi cihazına göre ayarla. Bu kaynak koddan üretilen APK test/debug sürümüdür.
 
 **Note:** This is the original V2 app source supplied by the author, excluding the V1 backup and machine-specific paths. No new full build was run on GitHub after publication.
 
+
+## Verified normal Termux build / Normal Termux derleme testi
+
+**User-reported successful build on Android ARM64 (16 October 2026):** The calculator APK was built using Java 26, Gradle 9.6, Android SDK Platform 34, and Termux-native AAPT2. Android SDK Platform 35 failed resource linking with the available native AAPT2; platform 34 passed the resource test. The APK was copied to Android Downloads. This is a real-device user test, not an automated compatibility guarantee.
+
+**Türkçe:** Normal Termux'ta Java 26, Gradle 9.6, Android SDK 34 ve Termux ARM64 AAPT2 ile APK derlemesi kullanıcı tarafından başarılı olarak bildirildi. SDK 35'in android.jar dosyası bu AAPT2 sürümüyle okunamadığından SDK 34 kullanıldı.
+
+From a fresh Termux installation, first follow the [Android SDK and native AAPT2 setup guide](../../docs/ANDROID-APK-BUILD.md). With dependencies installed, run this in **normal Termux**:
+
+```sh
+cd ~/ByTelli-Termux/examples/ByBlackCalculator || exit 1
+export JAVA_HOME="$PREFIX/lib/jvm/java-26-openjdk"
+export PATH="$JAVA_HOME/bin:$PATH"
+export ANDROID_HOME="$HOME/android-sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+mkdir -p "$PREFIX/tmp"
+export TMPDIR="$PREFIX/tmp"
+unset JAVA_TOOL_OPTIONS GRADLE_OPTS
+printf 'sdk.dir=%s\n' "$ANDROID_HOME" > local.properties
+
+AAPT=""
+for F in "$PREFIX/bin/aapt2" "$ANDROID_HOME/build-tools/34.0.0/aapt2"; do
+  if [ -x "$F" ] && "$F" version >/dev/null 2>&1 && "$F" dump resources "$ANDROID_HOME/platforms/android-34/android.jar" >/dev/null 2>&1; then
+    AAPT="$F"; break
+  fi
+done
+if [ -z "$AAPT" ]; then echo "Compatible ARM64 AAPT2 not found"; exit 1; fi
+sed -i '/^android.aapt2FromMavenOverride=/d' gradle.properties
+printf 'android.aapt2FromMavenOverride=%s\n' "$AAPT" >> gradle.properties
+
+if gradle --offline --no-daemon assembleDebug; then
+  cp app/build/outputs/apk/debug/app-debug.apk /storage/emulated/0/Download/ByBlack-Calculator-V2.apk
+  echo "APK: Downloads/ByBlack-Calculator-V2.apk"
+fi
+```
+
+The `--offline` build requires Gradle and Android Gradle Plugin dependencies to have been cached already. This is a debug APK, not a production-signed release.
 
 ## Complete source code / Tam kaynak kod
 
@@ -136,7 +173,7 @@ public class MainActivity extends Activity {
 
 ```groovy
 plugins { id 'com.android.application' }
-android { namespace 'com.byblack.calculator'; compileSdk 35
+android { namespace 'com.byblack.calculator'; compileSdk 34
  defaultConfig { applicationId 'com.byblack.calculator'; minSdk 26; targetSdk 28; versionCode 2; versionName '2.0' }
 }
 ```
