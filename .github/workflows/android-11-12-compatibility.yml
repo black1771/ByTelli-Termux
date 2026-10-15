@@ -54,6 +54,15 @@ jobs:
           AVDCONFIG
           "$ANDROID_HOME/emulator/emulator" -list-avds
           "$ANDROID_HOME/emulator/emulator" -list-avds | grep -Fx byblack_api30
+      - name: Enable KVM access for Android emulator
+        run: |
+          if [ ! -e /dev/kvm ]; then
+            echo "KVM device is unavailable on this runner"
+            exit 1
+          fi
+          sudo chmod 666 /dev/kvm
+          ls -l /dev/kvm
+          test -r /dev/kvm && test -w /dev/kvm
       - name: Start Android 11 without runner boot key events
         run: |
           "$ANDROID_HOME/emulator/emulator" -avd byblack_api30 -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect > /tmp/byblack-emulator.log 2>&1 &
