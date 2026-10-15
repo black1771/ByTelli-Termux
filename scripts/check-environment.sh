@@ -16,4 +16,11 @@ for cmd in java javac python python3 clang make cmake git gradle aapt2; do
     printf '%-10s NOT FOUND\n' "$cmd"
   fi
 done
+echo "=== Versions ==="
+if command -v java >/dev/null 2>&1; then java -version 2>&1 | head -3; fi
+if command -v gradle >/dev/null 2>&1; then
+ gradle --version 2>&1 | grep -E '^Gradle |^Launcher JVM:|^Daemon JVM:|^JVM:' || echo "Gradle version unavailable (check Java compatibility)."
+fi
+SDK="${ANDROID_HOME:-$HOME/android-sdk}"
+if [ -f "$SDK/platforms/android-34/android.jar" ]; then echo "SDK 34: found"; else echo "SDK 34: missing ($SDK)"; fi
 echo "No changes made; no data uploaded."

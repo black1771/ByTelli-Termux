@@ -51,6 +51,19 @@ This repository also documents how to compile Android apps **inside regular Term
 
 **Verified Developer Lab build environment:** ARM64 Android / Java 25 / Gradle 9.6 / Android Gradle Plugin 8.7.3 / Android SDK platform 34 / Termux-native `aapt2`.
 
+**Additional real-device build test (2026-10-15):** On standard Termux (Android 16, ARM64), the Developer Lab V1 example completed `gradle --offline --no-daemon assembleDebug` successfully with **Java 26.0.2 and Gradle 9.6.0**, running 31 Gradle tasks. The resulting debug APK was copied to Downloads. The Gradle version was subsequently confirmed as 9.6.0 (`Launcher JVM: 26.0.2`); app launch was not yet verified. An earlier attempt with the environment's default Java 21 failed with a native `PerfettoTrace` registration abort; the cause has not been isolated. Gradle officially supports running on Java 26 starting in **Gradle 9.4.0** ([compatibility matrix](https://docs.gradle.org/current/userguide/compatibility.html)).
+
+To select Java 26 temporarily in standard Termux (if already installed), run:
+
+```sh
+export JAVA_HOME="$PREFIX/lib/jvm/java-26-openjdk"
+export PATH="$JAVA_HOME/bin:$PATH"
+java -version
+gradle --version
+```
+
+This does not permanently replace your default Java. For a build, follow the SDK and native AAPT2 setup guide below; Java 26 alone is not sufficient.
+
 1. Install Termux from a [trusted official source](https://github.com/termux/termux-app#installation).
 2. Follow the **[step-by-step guide: install Java + Android SDK + ARM64 AAPT2, build an APK and install it](docs/ANDROID-APK-BUILD.md)**.
 3. Explore the **[Developer Lab V1 source](examples/ByTelliDeveloperLabV1)**.

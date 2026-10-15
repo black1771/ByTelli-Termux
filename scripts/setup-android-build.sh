@@ -24,6 +24,8 @@ fi
 }
 
 ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
+mkdir -p "$ANDROID_HOME"
+ANDROID_HOME="$(cd "$ANDROID_HOME" && pwd -P)"
 export ANDROID_HOME
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
 TMP="$HOME/.bytelli-sdk-unpack"
@@ -44,14 +46,11 @@ echo "[3/6] Installing verified SDK 34 packages..."
 
 echo "[4/6] Saving environment variables..."
 PROFILE="$HOME/.bashrc"
-if ! grep -q 'BYBLACK_ANDROID_ENV' "$PROFILE" 2>/dev/null; then
-cat >> "$PROFILE" <<'EOF'
-# BYBLACK_ANDROID_ENV
-export ANDROID_HOME="$HOME/android-sdk"
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
-EOF
+# Replace any earlier Byblack block so a custom SDK location is preserved.
+if [ -f "$PROFILE" ]; then
+  sed -i '/^# BYBLACK_ANDROID_ENV$/,/^export PATH="\$ANDROID_HOME\/cmdline-tools\/latest\/bin:\$PATH"$/d' "$PROFILE"
 fi
+printf '\n# BYBLACK_ANDROID_ENV\nexport ANDROID_HOME=%q\nexport ANDROID_SDK_ROOT="$ANDROID_HOME"\nexport PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"\n' "$ANDROID_HOME" >> "$PROFILE"
 
 echo "[5/6] Configuring the example project..."
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
