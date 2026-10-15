@@ -1,0 +1,65 @@
+name: Android 11-12 APK smoke test
+
+# Manual only: no automatic runs on pushes or pull requests.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  emulator-smoke:
+    name: Android ${{ matrix.api-level }} smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [30, 31]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21 (Linux CI only)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle 9.6.0
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.6.0'
+
+      # GitHub's Ubuntu runner already includes an Android SDK.
+      # Avoid setup-android@v3: its default legacy "tools" package
+      # request currently fails with "Failed to find package 'tools'".
+      - name: Verify runner Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          test -d "$ANDROID_HOME"
+          test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" || command -v sdkmanager
+
+      - name: Android emulator install and launch
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-boot-timeout: 600
+          script: |
+            gradle --no-daemon -p examples/ByTelliDeveloperLabV1 assembleDebug
+            bash -c 'for i in $(seq 1 90); do if adb shell service check package 2>/dev/null | grep -q found && adb shell service check activity 2>/dev/null | grep -q found; then exit 0; fi; sleep 5; done; echo "Android system services did not become ready"; adb shell service list; exit 1'
+            adb install -r examples/ByTelliDeveloperLabV1/app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n com.bytelli.developerlab/.MainActivity
+            sleep 5
+            adb shell pidof com.bytelli.developerlab | grep -Eq '[0-9]+'
+            echo "APK installed and app process running on API ${{ matrix.api-level }}"
+
+      - name: Scope of test
+        if: always()
+        run: |
+          echo "This is a basic install/start smoke test, not a complete feature or Bluetooth compatibility test."
