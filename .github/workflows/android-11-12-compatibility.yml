@@ -31,7 +31,28 @@ jobs:
           echo "ANDROID_HOME=$ANDROID_HOME"
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64" </dev/null
           mkdir -p "$HOME/.android/avd"
-          printf "no\n" | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n byblack_api30 -k "system-images;android-30;google_apis;x86_64" --force
+          # Create the AVD configuration directly, bypassing avdmanager's interactive prompt.
+          AVD_DIR="$HOME/.android/avd/byblack_api30.avd"
+          mkdir -p "$AVD_DIR"
+          printf 'avd.ini.encoding=UTF-8\npath=%s\npath.rel=avd/byblack_api30.avd\ntarget=android-30\n' "$AVD_DIR" > "$HOME/.android/avd/byblack_api30.ini"
+          cat > "$AVD_DIR/config.ini" <<'AVDCONFIG'
+          AvdId=byblack_api30
+          avd.ini.displayname=Byblack Android 11
+          abi.type=x86_64
+          hw.cpu.arch=x86_64
+          hw.cpu.ncore=2
+          hw.ramSize=2048
+          hw.lcd.width=1080
+          hw.lcd.height=1920
+          hw.lcd.density=420
+          disk.dataPartition.size=4096M
+          image.sysdir.1=system-images/android-30/google_apis/x86_64/
+          tag.id=google_apis
+          tag.display=Google APIs
+          PlayStore.enabled=false
+          fastboot.forceColdBoot=yes
+          AVDCONFIG
+          "$ANDROID_HOME/emulator/emulator" -list-avds
           "$ANDROID_HOME/emulator/emulator" -list-avds | grep -Fx byblack_api30
       - name: Start Android 11 without runner boot key events
         run: |
