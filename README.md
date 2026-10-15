@@ -112,6 +112,12 @@ Enter an app name such as `MyApp` and a unique package such as `com.example.myap
 
 > **Experimental:** test the generated project on your device before relying on it for production work. The generated APK is a debug build.
 
+## 📱 Custom Android APK Requests / Özel APK İstekleri
+
+Need a custom Android application? **[Request an APK through GitHub Issues](https://github.com/black1771/ByTelli-Termux/issues/new?template=custom-apk-request.yml)**. We review requests based on feasibility, scope and time; submission does not guarantee acceptance. [Details in English and Turkish](CUSTOM-APK-REQUESTS.md).
+
+Özel Android APK yaptırmak mı istiyorsunuz? **[GitHub üzerinden APK isteği gönderin](https://github.com/black1771/ByTelli-Termux/issues/new?template=custom-apk-request.yml)**. Talepler uygunluk, kapsam ve süreye göre değerlendirilir. [Türkçe ve İngilizce ayrıntılar](CUSTOM-APK-REQUESTS.md).
+
 ## 🤝 Help make Byblack better
 
 ⭐ **Star this repository** if the project interests you.
