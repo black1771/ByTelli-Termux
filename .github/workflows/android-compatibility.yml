@@ -31,8 +31,14 @@ jobs:
         with:
           gradle-version: '9.6.0'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # GitHub's Ubuntu runner already includes an Android SDK.
+      # Avoid setup-android@v3: its default legacy "tools" package
+      # request currently fails with "Failed to find package 'tools'".
+      - name: Verify runner Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          test -d "$ANDROID_HOME"
+          test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" || command -v sdkmanager
 
       - name: Android emulator install and launch
         uses: reactivecircus/android-emulator-runner@v2
