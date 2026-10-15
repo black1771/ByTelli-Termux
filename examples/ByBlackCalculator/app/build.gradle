@@ -1,4 +1,4 @@
 plugins { id 'com.android.application' }
-android { namespace 'com.byblack.calculator'; compileSdk 35
+android { namespace 'com.byblack.calculator'; compileSdk 34
  defaultConfig { applicationId 'com.byblack.calculator'; minSdk 26; targetSdk 28; versionCode 2; versionName '2.0' }
 }
