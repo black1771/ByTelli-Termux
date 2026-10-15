@@ -1,4 +1,4 @@
-name: Android 11-12 APK smoke test
+name: Android 10-12 APK smoke test
 
 # Manual only: no automatic runs on pushes or pull requests.
 on:
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api-level: [30, 31]
+        api-level: [29, 30, 31]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
