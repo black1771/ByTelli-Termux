@@ -4,6 +4,9 @@ set -euo pipefail
 [ "${PREFIX:-}" = "/data/data/com.termux/files/usr" ] || { echo "ERROR: use standard Termux."; exit 1; }
 command -v gradle >/dev/null 2>&1 || { echo "ERROR: install Gradle first."; exit 1; }
 command -v aapt2 >/dev/null 2>&1 || { echo "ERROR: install ARM64 aapt2 first."; exit 1; }
+ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
+[ -f "$ANDROID_HOME/platforms/android-34/android.jar" ] || { echo "ERROR: SDK platform android-34 missing at $ANDROID_HOME"; exit 1; }
+[ -x "$PREFIX/bin/aapt2" ] || { echo "ERROR: native ARM64 aapt2 missing"; exit 1; }
 read -r -p "App name (example MyApp): " APP
 read -r -p "Package (example com.example.myapp): " PKG
 [[ "$APP" =~ ^[A-Za-z][A-Za-z0-9_]*$ ]] || { echo "Invalid app name"; exit 1; }
@@ -63,8 +66,6 @@ public class MainActivity extends Activity {
  }
 }
 EOF
-ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
-[ -d "$ANDROID_HOME/platforms/android-34" ] || { echo "ERROR: SDK platform android-34 missing at $ANDROID_HOME"; exit 1; }
 printf 'sdk.dir=%s\n' "$ANDROID_HOME" > "$DIR/local.properties"
 printf 'android.aapt2FromMavenOverride=%s\n' "$PREFIX/bin/aapt2" > "$DIR/gradle.properties"
 echo "CREATED: $DIR"
