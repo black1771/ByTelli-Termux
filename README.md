@@ -37,6 +37,22 @@ Screenshots captured on the phone running the published V1.0 app.
 
 **Important:** V1.0 is an **example application** and source-code editor, **not** an on-device compiler or full APK-building IDE. The published APK is a **debug build**, not a production-signed Play Store release. Review source and verify downloads before installing.
 
+## ✅ Verified Android 13–15 compatibility / Doğrulanmış uyumluluk
+
+The **Byblack Developer Lab V1 example source** passed the GitHub Actions Android emulator smoke tests on **15 October 2026**:
+
+| Android version | API level | APK build, install and launch |
+| --- | ---: | --- |
+| Android 13 | 33 | ✅ Passed |
+| Android 14 | 34 | ✅ Passed |
+| Android 15 | 35 | ✅ Passed |
+
+**[🔎 View the public, successful GitHub Actions test run](https://github.com/black1771/ByTelli-Termux/actions/runs/38709534580)** · [Workflow source](.github/workflows/android-compatibility.yml)
+
+The workflow compiles a **debug APK from repository source**, installs it in an **x86_64 GitHub-hosted emulator**, launches `com.bytelli.developerlab/.MainActivity`, and checks that the app process remains running. This is a **basic build/install/launch smoke test**, not proof that all editor, storage, Bluetooth, or other features work on every device. The separately reported Android 16 real-phone test used ARM64 Termux, not these emulators. The published release APK itself was not separately installed by this workflow.
+
+**Türkçe:** Android 13, 14 ve 15 için örnek uygulamanın kaynak kodundan APK derleme, emülatöre yükleme ve açılış testleri başarıyla tamamlandı. Kanıt bağlantısı yukarıdadır. Bu sonuç bütün özelliklerin veya her telefonun sorunsuz çalışacağını garanti etmez.
+
 ## 📂 Example app: Byblack File Manager V1
 
 A second real Android Java example is now included: **[Byblack File Manager V1](examples/ByblackFileManager)**.
