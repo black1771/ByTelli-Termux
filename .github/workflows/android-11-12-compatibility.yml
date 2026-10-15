@@ -49,10 +49,10 @@ jobs:
           profile: pixel_2
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          emulator-boot-timeout: 600
+          emulator-boot-timeout: 900
           script: |
             gradle --no-daemon -p examples/ByTelliDeveloperLabV1 assembleDebug
-            bash -c 'for i in $(seq 1 90); do if adb shell service check package 2>/dev/null | grep -q found && adb shell service check activity 2>/dev/null | grep -q found; then exit 0; fi; sleep 5; done; echo "Android system services did not become ready"; adb shell service list; exit 1'
+            bash -c 'for i in $(seq 1 120); do p=$(adb shell service check package 2>/dev/null | tr -d "\r"); a=$(adb shell service check activity 2>/dev/null | tr -d "\r"); if [ "$p" = "Service package: found" ] && [ "$a" = "Service activity: found" ]; then echo "Android package/activity services ready"; exit 0; fi; if [ $((i % 12)) -eq 0 ]; then echo "Waiting for Android services ($i/120): package=$p activity=$a"; fi; sleep 5; done; echo "Android services not ready"; adb shell service list; exit 1'
             adb install -r examples/ByTelliDeveloperLabV1/app/build/outputs/apk/debug/app-debug.apk
             adb shell am start -W -n com.bytelli.developerlab/.MainActivity
             sleep 5
