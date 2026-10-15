@@ -50,13 +50,11 @@ jobs:
           disable-animations: true
           emulator-boot-timeout: 600
           script: |
-            set -e
-            cd examples/ByTelliDeveloperLabV1
-            gradle --no-daemon assembleDebug
-            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            gradle --no-daemon -p examples/ByTelliDeveloperLabV1 assembleDebug
+            adb install -r examples/ByTelliDeveloperLabV1/app/build/outputs/apk/debug/app-debug.apk
             adb shell am start -W -n com.bytelli.developerlab/.MainActivity
             sleep 5
-            adb shell pidof com.bytelli.developerlab | grep -Eq '[0-9]+' || { echo 'App did not remain running'; exit 1; }
+            adb shell pidof com.bytelli.developerlab | grep -Eq '[0-9]+'
             echo "APK installed and app process running on API ${{ matrix.api-level }}"
 
       - name: Scope of test
