@@ -6,6 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Help Wanted](https://img.shields.io/badge/Contributions-Welcome-brightgreen)](CONTRIBUTING.md)
 [![Support](https://img.shields.io/badge/Support-Byblack-orange)](SUPPORT.md)
+[![Android 11 smoke test](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-11-12-compatibility.yml/badge.svg)](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-11-12-compatibility.yml)
+[![Android 13–15 smoke tests](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-compatibility.yml/badge.svg)](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-compatibility.yml)
 
 **English | [Türkçe](#türkçe)**
 
@@ -137,11 +139,15 @@ Need a custom Android application? **[Request an APK through GitHub Issues](http
 
 Özel Android APK yaptırmak mı istiyorsunuz? **[GitHub üzerinden APK isteği gönderin](https://github.com/black1771/ByTelli-Termux/issues/new?template=custom-apk-request.yml)**. Talepler uygunluk, kapsam ve süreye göre değerlendirilir. [Türkçe ve İngilizce ayrıntılar](CUSTOM-APK-REQUESTS.md).
 
+**[📋 Changelog / Sürüm geçmişi](CHANGELOG.md)** · **[🧪 Test reports / Test raporları](TEST-REPORT.md)** · **[🐛 Structured bug report / Hata bildirim formu](https://github.com/black1771/ByTelli-Termux/issues/new?template=bug_report.yml)**
+
+> CI badges show the most recent workflow result; emulator workflows run manually. The badges do not guarantee full app compatibility.
+
 ## 🤝 Help make Byblack better
 
 ⭐ **Star this repository** if the project interests you.
 
-🐛 [Report a bug](https://github.com/black1771/ByTelli-Termux/issues/new) — include device, Android version, expected/actual behavior and reproduction steps.
+🐛 [Report a bug](https://github.com/black1771/ByTelli-Termux/issues/new?template=bug_report.yml) — include device, Android version, expected/actual behavior and reproduction steps.
 
 💡 [Suggest a feature](https://github.com/black1771/ByTelli-Termux/issues/new) — tell us what would make phone-only development easier.
 
