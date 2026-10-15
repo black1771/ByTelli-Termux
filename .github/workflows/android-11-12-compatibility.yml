@@ -1,6 +1,5 @@
-name: Android 10-12 APK smoke test
+name: Android 11 independent emulator smoke test
 
-# Manual only: no automatic runs on pushes or pull requests.
 on:
   workflow_dispatch:
 
@@ -8,58 +7,66 @@ permissions:
   contents: read
 
 jobs:
-  emulator-smoke:
-    name: Android ${{ matrix.api-level }} smoke test
+  android-11:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
-    strategy:
-      fail-fast: false
-      matrix:
-        api-level: [30]
+    timeout-minutes: 40
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Java 21 (Linux CI only)
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
-
-      - name: Set up Gradle 9.6.0
-        uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.6.0'
-
-      # GitHub's Ubuntu runner already includes an Android SDK.
-      # Avoid setup-android@v3: its default legacy "tools" package
-      # request currently fails with "Failed to find package 'tools'".
-      - name: Verify runner Android SDK
+      - name: Build debug APK
+        run: gradle --no-daemon -p examples/ByTelliDeveloperLabV1 assembleDebug
+      - name: Install emulator tools and Android 11 system image
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
-          test -d "$ANDROID_HOME"
-          test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" || command -v sdkmanager
-
-      - name: Android emulator install and launch
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: google_apis
-          arch: x86_64
-          profile: pixel_2
-          disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          emulator-boot-timeout: 900
-          script: |
-            gradle --no-daemon -p examples/ByTelliDeveloperLabV1 assembleDebug
-            bash -c 'for i in $(seq 1 120); do p=$(adb shell service check package 2>/dev/null | tr -d "\r"); a=$(adb shell service check activity 2>/dev/null | tr -d "\r"); if [ "$p" = "Service package: found" ] && [ "$a" = "Service activity: found" ]; then echo "Android package/activity services ready"; exit 0; fi; if [ $((i % 12)) -eq 0 ]; then echo "Waiting for Android services ($i/120): package=$p activity=$a"; fi; sleep 5; done; echo "Android services not ready"; adb shell service list; exit 1'
-            bash -c 'apk=examples/ByTelliDeveloperLabV1/app/build/outputs/apk/debug/app-debug.apk; for i in $(seq 1 20); do echo "APK install attempt $i/20"; if adb install -r "$apk"; then echo "APK install successful"; exit 0; fi; echo "Package service not ready or install failed; waiting 15 seconds"; sleep 15; done; echo "APK install failed after 20 attempts"; adb shell service check package || true; exit 1'
-            adb shell am start -W -n com.bytelli.developerlab/.MainActivity
-            sleep 5
-            adb shell pidof com.bytelli.developerlab | grep -Eq '[0-9]+'
-            echo "APK installed and app process running on API ${{ matrix.api-level }}"
-
-      - name: Scope of test
-        if: always()
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64" || test -d "$ANDROID_HOME/system-images/android-30/google_apis/x86_64"
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n byblack_api30 -k "system-images;android-30;google_apis;x86_64" --force
+      - name: Start Android 11 without runner boot key events
         run: |
-          echo "This is a basic install/start smoke test, not a complete feature or Bluetooth compatibility test."
+          "$ANDROID_HOME/emulator/emulator" -avd byblack_api30 -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect > /tmp/byblack-emulator.log 2>&1 &
+          echo $! > /tmp/byblack-emulator.pid
+          adb wait-for-device
+          echo "Emulator process started"
+      - name: Wait for package manager and install APK
+        run: |
+          bash -euo pipefail -c '
+            apk="examples/ByTelliDeveloperLabV1/app/build/outputs/apk/debug/app-debug.apk"
+            for i in $(seq 1 120); do
+              if ! kill -0 "$(cat /tmp/byblack-emulator.pid)" 2>/dev/null; then
+                echo "Emulator exited unexpectedly"; tail -100 /tmp/byblack-emulator.log; exit 1
+              fi
+              boot=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d "\r" || true)
+              pkg=$(adb shell service check package 2>/dev/null | tr -d "\r" || true)
+              if [ "$boot" = "1" ] && [ "$pkg" = "Service package: found" ]; then
+                echo "Android boot and package service ready"
+                break
+              fi
+              if [ $((i % 12)) -eq 0 ]; then echo "Waiting: boot=$boot package=$pkg attempt=$i"; fi
+              sleep 5
+            done
+            if [ "$boot" != "1" ] || [ "$pkg" != "Service package: found" ]; then
+              echo "Android 11 package manager unavailable"; tail -100 /tmp/byblack-emulator.log; exit 1
+            fi
+            for i in $(seq 1 5); do
+              if adb install -r "$apk"; then echo "APK installed"; exit 0; fi
+              sleep 10
+            done
+            echo "APK installation failed"; exit 1
+          '
+      - name: Launch and verify app
+        run: |
+          adb shell am start -W -n com.bytelli.developerlab/.MainActivity
+          sleep 5
+          adb shell pidof com.bytelli.developerlab | grep -Eq '[0-9]+'
+          echo "Android 11 APK smoke test passed"
+      - name: Emulator diagnostics on failure
+        if: failure()
+        run: |
+          adb shell getprop sys.boot_completed || true
+          adb shell service check package || true
+          tail -120 /tmp/byblack-emulator.log || true
