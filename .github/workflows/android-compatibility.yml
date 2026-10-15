@@ -52,20 +52,7 @@ jobs:
           emulator-boot-timeout: 600
           script: |
             gradle --no-daemon -p examples/ByTelliDeveloperLabV1 assembleDebug
-            echo "Waiting for Android package and activity services..."
-            ready=0
-            for i in $(seq 1 90); do
-              if adb shell service check package 2>/dev/null | grep -q "found" && adb shell service check activity 2>/dev/null | grep -q "found"; then
-                ready=1
-                break
-              fi
-              sleep 5
-            done
-            if [ "$ready" -ne 1 ]; then
-              echo "Android system services did not become ready"
-              adb shell service list || true
-              exit 1
-            fi
+            bash -c 'for i in $(seq 1 90); do if adb shell service check package 2>/dev/null | grep -q found && adb shell service check activity 2>/dev/null | grep -q found; then exit 0; fi; sleep 5; done; echo "Android system services did not become ready"; adb shell service list; exit 1'
             adb install -r examples/ByTelliDeveloperLabV1/app/build/outputs/apk/debug/app-debug.apk
             adb shell am start -W -n com.bytelli.developerlab/.MainActivity
             sleep 5
