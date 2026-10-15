@@ -54,3 +54,14 @@ For each test, record: date, Android/API version, pass/fail, GitHub Actions run 
 **Note:** GitHub Actions automatically stores logs, but this Markdown report is **maintained manually**; it does not update itself after new runs.
 
 **Not:** GitHub Actions logları otomatik saklar, ancak bu Markdown raporu **elle güncellenir**; yeni testlerden sonra kendiliğinden değişmez.
+
+## 2026-10-15 — Android 11 final retest: PASS
+
+GitHub Actions run: https://github.com/black1771/ByTelli-Termux/actions/runs/38725970949
+
+Verified: APK build PASS; APK install on Android 11 (API 30) emulator PASS; launch and app-process verification PASS.
+
+Earlier failures were CI environment problems, including missing KVM permissions. Commit `c8d3d7e` added KVM access. This is a basic smoke test, not comprehensive feature compatibility.
+
+Android 10 and 12 passed: https://github.com/black1771/ByTelli-Termux/actions/runs/38712216857
+Android 13, 14 and 15 passed: https://github.com/black1771/ByTelli-Termux/actions/runs/38709534580
