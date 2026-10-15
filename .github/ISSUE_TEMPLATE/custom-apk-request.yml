@@ -1,0 +1,42 @@
+name: "📱 Custom APK Request / Özel APK İsteği"
+description: "Request a custom Android application / Özel Android uygulaması talep edin"
+title: "[APK Request] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe your idea in Turkish or English. GitHub Issues are public; never share passwords, keys, tokens, or sensitive personal data.
+        Fikrinizi Türkçe veya İngilizce anlatın. GitHub Issues herkese açıktır; şifre, anahtar veya kişisel hassas veri paylaşmayın.
+  - type: textarea
+    id: idea
+    attributes:
+      label: "App idea / Uygulama fikri"
+      description: "What should the app do? / Uygulama ne yapmalı?"
+      placeholder: "Describe the purpose and main functions / Amacı ve temel özellikleri anlatın"
+    validations:
+      required: true
+  - type: textarea
+    id: features
+    attributes:
+      label: "Requested features / İstenen özellikler"
+      description: "List important screens and actions / Önemli ekran ve işlemleri yazın"
+    validations:
+      required: true
+  - type: input
+    id: android
+    attributes:
+      label: "Android version / Android sürümü"
+      placeholder: "e.g. Android 14"
+  - type: textarea
+    id: details
+    attributes:
+      label: "Other details / Diğer bilgiler"
+      description: "Optional, non-sensitive details / İsteğe bağlı, hassas olmayan bilgiler"
+  - type: checkboxes
+    id: acknowledgment
+    attributes:
+      label: "Acknowledgment / Onay"
+      options:
+        - label: "I understand this is a request, not a guaranteed delivery / Bunun kesin teslimat sözü olmadığını anlıyorum."
+          required: true
