@@ -31,7 +31,7 @@ jobs:
           echo "ANDROID_HOME=$ANDROID_HOME"
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64" </dev/null
           mkdir -p "$HOME/.android/avd"
-          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n byblack_api30 -k "system-images;android-30;google_apis;x86_64" --force
+          printf "no\n" | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n byblack_api30 -k "system-images;android-30;google_apis;x86_64" --force
           "$ANDROID_HOME/emulator/emulator" -list-avds | grep -Fx byblack_api30
       - name: Start Android 11 without runner boot key events
         run: |
