@@ -58,8 +58,14 @@ jobs:
         run: |
           "$ANDROID_HOME/emulator/emulator" -avd byblack_api30 -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect > /tmp/byblack-emulator.log 2>&1 &
           echo $! > /tmp/byblack-emulator.pid
-          adb wait-for-device
-          echo "Emulator process started"
+          echo "Emulator process started; waiting up to 180 seconds for ADB"
+          if ! timeout 180s adb wait-for-device; then
+            echo "ADB timeout: emulator did not connect"
+            adb devices -l || true
+            tail -120 /tmp/byblack-emulator.log || true
+            exit 1
+          fi
+          adb devices -l
       - name: Wait for package manager and install APK
         run: |
           bash -euo pipefail -c '
