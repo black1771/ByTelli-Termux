@@ -4,7 +4,7 @@ Scientific Android calculator built with Java, Android Gradle Plugin 8.7.3 and A
 
 Features: dark UI, DEG/RAD trigonometry, square root, powers, logarithms, constants, percentages, saved calculation history and answer recall.
 
-![Real Android screenshot](../../../Screenshot_20261015_165133.jpg)
+![Real Android screenshot](../../Screenshot_20261015_165133.jpg)
 
 ## Build / Derleme
 
