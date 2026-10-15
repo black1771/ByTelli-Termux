@@ -4,6 +4,24 @@ This log records **observed** CI smoke-test results and failures. Do not interpr
 
 Bu kayıt, gözlemlenen test sonuçlarını ve hataları içerir. Başarılı temel test, tüm uygulama özelliklerinin çalıştığını garanti etmez.
 
+## Build environment versus Android runtime / Derleme ortamı ve Android sürümü
+
+**Important:** The Android version under test is the **emulator runtime**, not the operating system on which Gradle or Java runs.
+
+| Component / Bileşen | GitHub Actions Android 10–15 smoke tests |
+| --- | --- |
+| Build host / Derleme sunucusu | GitHub-hosted Ubuntu Linux |
+| Build Java / Derleme Java | Temurin JDK **21** |
+| Build Gradle | **9.6.0** |
+| Android SDK platform used by example / Örnek projenin derleme SDK'sı | **34** |
+| Emulator Android / Emülatör Android | **API 29, 30, 31, 33, 34, 35** (tested in separate runs) |
+| Emulator architecture / Mimari | **x86_64** |
+| App under test / Test uygulaması | `examples/ByTelliDeveloperLabV1` debug APK |
+
+**Java 26 was not used in these GitHub emulator jobs.** A separate real-phone **Android 16 / ARM64 Termux** build was performed with **Java 26.0.2 and Gradle 9.6.0**; that does not establish Java 26 compatibility on Android 10 or 11. The APK is compiled on Ubuntu and then installed into each Android emulator.
+
+**Türkçe:** GitHub'daki Android 10–15 testlerinde Java 21 ve Gradle 9.6 kullanılıyor. Java 26 + Gradle 9.6 testi ayrı olarak Android 16 ARM64 Termux telefonunda yapıldı. Android 10 emülatöründe Java 26 çalıştırıldığı anlamına gelmez.
+
 ## 2026-10-15 — Android 13, 14, 15 (API 33, 34, 35)
 
 **Result / Sonuç:** PASS on all three emulator jobs.
