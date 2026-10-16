@@ -41,6 +41,17 @@ The example itself is a lightweight Android **Java source editor** built entirel
 
 Screenshots captured on the phone running the published V1.0 app.
 
+### 📱 Android 17 — Samsung Galaxy S24 Ultra (real device)
+
+The screenshot below shows **ByTelli Developer Lab running on a Samsung Galaxy S24 Ultra with Android 17**. This is a real-device screenshot, separate from the Android 10–15 emulator smoke tests.
+
+<p align="center">
+  <img src="Screenshot_20261016_183955.jpg" alt="ByTelli Developer Lab source editor on Samsung Galaxy S24 Ultra with Android 17" width="300">
+</p>
+
+**Türkçe:** ByTelli Developer Lab, Android 17 yüklü Samsung Galaxy S24 Ultra üzerinde açılarak görüntülendi. Bu ekran görüntüsü gerçek cihazdan alınmıştır. Tek başına bütün özelliklerin Android 17 üzerinde test edildiği anlamına gelmez.
+
+
 **Features**
 - Dark editor with basic Java syntax highlighting and line numbers
 - Create projects and keep local files between sessions
