@@ -62,7 +62,7 @@ The screenshot below shows **ByTelli Developer Lab running on a Samsung Galaxy S
 
 **Important:** V1.0 is an **example application** and source-code editor, **not** an on-device compiler or full APK-building IDE. The published APK is a **debug build**, not a production-signed Play Store release. Review source and verify downloads before installing.
 
-## ✅ Verified Android 10–15 compatibility / Doğrulanmış uyumluluk
+## ✅ Android 10–17 compatibility tests / Android 10–17 uyumluluk testleri
 
 The **Byblack Developer Lab V1 example source** passed the GitHub Actions Android emulator smoke tests on **15 October 2026**:
 
@@ -74,12 +74,16 @@ The **Byblack Developer Lab V1 example source** passed the GitHub Actions Androi
 | Android 13 | 33 | ✅ Passed |
 | Android 14 | 34 | ✅ Passed |
 | Android 15 | 35 | ✅ Passed |
+| Android 16 | 36 | ✅ Real-device Termux APK build (launch not verified) |
+| Android 17 | 37 | ✅ Real-device Termux APK build (launch not verified) |
 
 **Evidence:** [Android 10/12](https://github.com/black1771/ByTelli-Termux/actions/runs/38712216857) · [Android 11](https://github.com/black1771/ByTelli-Termux/actions/runs/38725970949) · [Android 13–15](https://github.com/black1771/ByTelli-Termux/actions/runs/38709534580) · [Full report](TEST-REPORT.md)
 
+**Test distinction:** Android 10–15 rows are GitHub Actions emulator build/install/launch tests. Android 16–17 rows are separately reported real-device ARM64 Termux APK build tests; they are **not** emulator install/launch passes. The Android 17 build completed successfully on a Samsung Galaxy S24 Ultra on 16 October 2026 (31 Gradle tasks, `BUILD SUCCESSFUL`).
+
 The workflow compiles a **debug APK from repository source**, installs it in an **x86_64 GitHub-hosted emulator**, launches `com.bytelli.developerlab/.MainActivity`, and checks that the app process remains running. This is a **basic build/install/launch smoke test**, not proof that all editor, storage, Bluetooth, or other features work on every device. The separately reported Android 16 real-phone test used ARM64 Termux, not these emulators. The published release APK itself was not separately installed by this workflow.
 
-**Türkçe:** Android 10, 11, 12, 13, 14 ve 15 için örnek uygulamanın kaynak kodundan APK derleme, emülatöre yükleme ve açılış testleri başarıyla tamamlandı. Kanıt bağlantısı yukarıdadır. Bu sonuç bütün özelliklerin veya her telefonun sorunsuz çalışacağını garanti etmez.
+**Türkçe:** Android 10, 11, 12, 13, 14 ve 15 için örnek uygulamanın kaynak kodundan APK derleme, emülatöre yükleme ve açılış testleri başarıyla tamamlandı. Android 16 ve 17 için gerçek cihazda Termux üzerinden APK derlemesi başarılı olarak raporlandı; uygulama açılışı bu testlerle doğrulanmış değildir. Kanıt bağlantısı yukarıdadır. Bu sonuç bütün özelliklerin veya her telefonun sorunsuz çalışacağını garanti etmez.
 
 ## 📂 Example app: Byblack File Manager V1
 
