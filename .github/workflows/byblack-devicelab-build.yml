@@ -1,0 +1,38 @@
+name: ByBlack DeviceLab V2 APK Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'examples/ByBlackDeviceLab/**'
+      - '.github/workflows/byblack-devicelab-build.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK 34
+        run: sdkmanager --install "platforms;android-34" "build-tools;34.0.0"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build debug APK
+        working-directory: examples/ByBlackDeviceLab
+        run: |
+          # The repository's AAPT2 override is for ARM64 Termux only.
+          sed -i '/^android.aapt2FromMavenOverride=/d' gradle.properties
+          gradle --no-daemon assembleDebug
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ByBlack-DeviceLab-V2-debug
+          path: examples/ByBlackDeviceLab/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
