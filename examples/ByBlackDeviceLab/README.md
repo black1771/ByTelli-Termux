@@ -21,4 +21,4 @@ export ANDROID_HOME="$HOME/android-sdk"
 gradle --offline --no-daemon assembleDebug
 ```
 
-**Status:** Source upload in progress. The main Java activity is not yet present in this folder; this checkout cannot be built until `app/src/main/java/com/byblack/devicelab/MainActivity.java` is added. This is an experimental debug project, not a production release.
+**Status:** Java source and Gradle project files are published. This is an experimental debug project, not a production release. Building on another device has not been independently verified.
