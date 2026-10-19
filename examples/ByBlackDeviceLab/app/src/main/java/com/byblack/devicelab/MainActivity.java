@@ -13,6 +13,91 @@ import java.io.*;
 
 public class MainActivity extends Activity implements SensorEventListener {
 
+    boolean english;
+    String trEn(String value) {
+        if(!english || value==null) return value;
+        if(value.equals("PANEL")) return "DASHBOARD";
+        if(value.equals("SENSÖR")) return "SENSORS";
+        if(value.equals("RAPOR")) return "REPORT";
+        if(value.equals("CANLI SİSTEM PANELİ")) return "LIVE SYSTEM DASHBOARD";
+        if(value.equals("Cihaz")) return "Device";
+        if(value.equals("İşlemci mimarisi")) return "CPU architecture";
+        if(value.equals("Mantıksal çekirdek")) return "Logical processors";
+        if(value.equals("CANLI ÖLÇÜMLER")) return "LIVE READINGS";
+        if(value.equals("RAM kullanımı")) return "RAM usage";
+        if(value.equals("Ölçülüyor...")) return "Measuring...";
+        if(value.equals("Batarya")) return "Battery";
+        if(value.equals("Batarya sıcaklığı")) return "Battery temperature";
+        if(value.equals("RAM KULLANIM GRAFİĞİ")) return "RAM USAGE CHART";
+        if(value.equals("BELLEK VE DEPOLAMA")) return "MEMORY AND STORAGE";
+        if(value.equals("Toplam RAM")) return "Total RAM";
+        if(value.equals("Kullanılabilir RAM")) return "Available RAM";
+        if(value.equals("Uygulama veri bölümü toplam")) return "App data partition total";
+        if(value.equals("Uygulama veri bölümü boş")) return "App data partition free";
+        if(value.equals("BATARYA LABORATUVARI")) return "BATTERY LAB";
+        if(value.equals("Şarj durumu")) return "Charging status";
+        if(value.equals("Batarya voltajı")) return "Battery voltage";
+        if(value.equals("Batarya sağlığı")) return "Battery health";
+        if(value.equals("Erişilemiyor")) return "Unavailable";
+        if(value.equals("VERİLERİ YENİLE")) return "REFRESH DATA";
+        if(value.equals("Normal (Android durumu)")) return "Normal (Android status)";
+        if(value.equals("Aşırı sıcak")) return "Overheated";
+        if(value.equals("Sorun bildirildi")) return "Problem reported";
+        if(value.equals("Yüksek voltaj")) return "Overvoltage";
+        if(value.equals("Çok soğuk")) return "Too cold";
+        if(value.equals("Bilinmiyor")) return "Unknown";
+        if(value.equals("Şarj oluyor")) return "Charging";
+        if(value.equals("Dolu")) return "Full";
+        if(value.equals("Bataryadan çalışıyor")) return "Discharging";
+        if(value.equals("Şarj olmuyor")) return "Not charging";
+        if(value.equals("SENSÖR ENVANTERİ")) return "SENSOR INVENTORY";
+        if(value.equals("Durum")) return "Status";
+        if(value.equals("Sensör servisi yok")) return "Sensor service unavailable";
+        if(value.equals("Bulunan sensör sayısı")) return "Sensors found";
+        if(value.equals("Canlı okuma")) return "Live readings";
+        if(value.equals("Bir sensöre dokunarak ölçümü başlat.")) return "Tap a sensor to start reading.";
+        if(value.equals("CANLI SENSÖR VERİSİ")) return "LIVE SENSOR DATA";
+        if(value.equals("Henüz sensör seçilmedi")) return "No sensor selected";
+        if(value.equals("ÖLÇÜMÜ DURDUR")) return "STOP READING";
+        if(value.equals("Ölçüm durduruldu")) return "Reading stopped";
+        if(value.equals("Üretici")) return "Manufacturer";
+        if(value.equals("Tür")) return "Type";
+        if(value.equals("Maksimum aralık")) return "Maximum range";
+        if(value.equals("CANLI OKU")) return "READ LIVE";
+        if(value.equals("Ölçüm bekleniyor...")) return "Waiting for readings...";
+        if(value.equals("Bu sensör okunamadı")) return "Unable to read this sensor";
+        if(value.equals("Değer ")) return "Value ";
+        if(value.equals("EKRAN RENK TESTİ")) return "DISPLAY COLOR TEST";
+        if(value.equals("Amaç")) return "Purpose";
+        if(value.equals("Ölü piksel veya renk sorunu için tam ekran renk testi.")) return "Full-screen color test for dead pixels or color issues.";
+        if(value.equals("RENK TESTİNİ BAŞLAT")) return "START COLOR TEST";
+        if(value.equals("DOKUNMATİK TESTİ")) return "TOUCHSCREEN TEST";
+        if(value.equals("Parmağının izini ekranda çizerek dokunmayı kontrol et.")) return "Draw on the screen with your finger to check touch input.";
+        if(value.equals("DOKUNMATİK TESTİNİ BAŞLAT")) return "START TOUCH TEST";
+        if(value.equals("TEST BİLGİSİ")) return "TEST INFORMATION";
+        if(value.equals("Not")) return "Note";
+        if(value.equals("Bu testler donanımı onarmaz; yalnızca görsel kontrol sağlar.")) return "These tests do not repair hardware; they only provide visual checks.";
+        if(value.equals("GERİ DÖN")) return "GO BACK";
+        if(value.equals("CİHAZ RAPORU")) return "DEVICE REPORT";
+        if(value.equals("RAPORU PAYLAŞ")) return "SHARE REPORT";
+        if(value.equals("Raporu paylaş")) return "Share report";
+        if(value.equals("RAPORU KOPYALA")) return "COPY REPORT";
+        if(value.equals("Rapor kopyalandı")) return "Report copied";
+        if(value.equals("RAPORU YENİLE")) return "REFRESH REPORT";
+        return value;
+    }
+    void changeLanguage() {
+        final String[] names={"Türkçe","English"};
+        new AlertDialog.Builder(this)
+            .setTitle("Dil / Language")
+            .setSingleChoiceItems(names,english?1:0,(dialog,which)->{
+                english=which==1;
+                getPreferences(MODE_PRIVATE).edit().putBoolean("english",english).apply();
+                dialog.dismiss();
+                showTab(currentTab);
+            }).setNegativeButton(english?"Cancel":"İptal",null).show();
+    }
+
     final int BG=Color.rgb(7,12,22);
     final int CARD=Color.rgb(20,31,48);
     final int CYAN=Color.rgb(43,218,220);
@@ -45,7 +130,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     TextView text(String value,int size,int color,boolean bold) {
         TextView t=new TextView(this);
-        t.setText(value);
+        t.setText(trEn(value));
         t.setTextSize(size);
         t.setTextColor(color);
         if(bold)t.setTypeface(null,1);
@@ -79,7 +164,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         TextView label=text(name.toUpperCase(Locale.ROOT),11,MUTED,true);
         padding(label,0,10,0,3);
         parent.addView(label);
-        TextView v=text(value,16,WHITE,false);
+        TextView v=text(trEn(value),16,WHITE,false);
         v.setTextIsSelectable(true);
         parent.addView(v);
     }
@@ -138,6 +223,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     @Override public void onCreate(Bundle b) {
         super.onCreate(b);
+        english=getPreferences(MODE_PRIVATE).getBoolean("english",!Locale.getDefault().getLanguage().equals("tr"));
         sensorManager=(SensorManager)getSystemService(SENSOR_SERVICE);
         showTab(0);
         handler.postDelayed(ticker,2000);
@@ -195,6 +281,10 @@ public class MainActivity extends Activity implements SensorEventListener {
         TextView subtitle=text("HARDWARE INTELLIGENCE  •  V2 PRO TEST",11,CYAN,true);
         padding(subtitle,0,5,0,0);
         header.addView(subtitle);
+        TextView language=text(english?"🌐 English  ▾":"🌐 Türkçe  ▾",14,CYAN,true);
+        padding(language,0,12,0,2);
+        header.addView(language);
+        language.setOnClickListener(v->changeLanguage());
         root.addView(header);
 
         ScrollView scroll=new ScrollView(this);
@@ -327,7 +417,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         reading.addView(sensorReading);
         action("ÖLÇÜMÜ DURDUR",reading,()->{
             stopSensor();
-            if(sensorReading!=null)sensorReading.setText("Ölçüm durduruldu");
+            if(sensorReading!=null)sensorReading.setText(trEn("Ölçüm durduruldu"));
         });
 
         for(Sensor s:list) {
@@ -339,11 +429,11 @@ public class MainActivity extends Activity implements SensorEventListener {
                 stopSensor();
                 activeSensor=s;
                 if(sensorReading!=null)
-                    sensorReading.setText(s.getName()+"\nÖlçüm bekleniyor...");
+                    sensorReading.setText(s.getName()+"\n"+trEn("Ölçüm bekleniyor..."));
                 boolean ok=sensorManager.registerListener(
                     this,s,SensorManager.SENSOR_DELAY_NORMAL);
                 if(!ok && sensorReading!=null)
-                    sensorReading.setText("Bu sensör okunamadı");
+                    sensorReading.setText(trEn("Bu sensör okunamadı"));
             });
         }
     }
@@ -353,7 +443,7 @@ public class MainActivity extends Activity implements SensorEventListener {
            sensorReading==null)return;
         StringBuilder sb=new StringBuilder(e.sensor.getName());
         for(int i=0;i<e.values.length;i++) {
-            sb.append("\nDeğer ").append(i+1).append(": ")
+            sb.append("\n"+trEn("Değer ")).append(i+1).append(": ")
               .append(String.format(Locale.US,"%.4f",e.values[i]));
         }
         sensorReading.setText(sb.toString());
@@ -385,7 +475,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         colorIndex=0;
         FrameLayout frame=new FrameLayout(this);
         frame.setBackgroundColor(colors[0]);
-        TextView exit=text("DOKUN: SONRAKİ RENK\nUZUN BAS: ÇIKIŞ",17,Color.WHITE,true);
+        TextView exit=text(english?"TAP: NEXT COLOR\nLONG PRESS: EXIT":"DOKUN: SONRAKİ RENK\nUZUN BAS: ÇIKIŞ",17,Color.WHITE,true);
         exit.setGravity(Gravity.CENTER);
         exit.setShadowLayer(3,1,1,Color.BLACK);
         frame.addView(exit,new FrameLayout.LayoutParams(-1,-1));
@@ -458,23 +548,23 @@ public class MainActivity extends Activity implements SensorEventListener {
         int sensorCount=sensorManager==null?-1:
             sensorManager.getSensorList(Sensor.TYPE_ALL).size();
 
-        return "BYBLACK DEVICELAB V2 REPORT\n"+
-            "Date: "+new Date()+"\n"+
-            "Manufacturer: "+Build.MANUFACTURER+"\n"+
-            "Model: "+Build.MODEL+"\n"+
+        return (english?"BYBLACK DEVICELAB V2 REPORT\n":"BYBLACK DEVICELAB V2 CİHAZ RAPORU\n")+
+            (english?"Date: ":"Tarih: ")+new Date()+"\n"+
+            (english?"Manufacturer: ":"Üretici: ")+Build.MANUFACTURER+"\n"+
+            (english?"Model: ":"Model: ")+Build.MODEL+"\n"+
             "Android: "+Build.VERSION.RELEASE+"\n"+
             "API: "+Build.VERSION.SDK_INT+"\n"+
             "ABI: "+Arrays.toString(Build.SUPPORTED_ABIS)+"\n"+
-            "Logical processors: "+
+            (english?"Logical processors: ":"Mantıksal işlemciler: ")+
                 Runtime.getRuntime().availableProcessors()+"\n"+
-            "Total RAM: "+gb(m.totalMem)+"\n"+
-            "Available RAM: "+gb(m.availMem)+"\n"+
-            "App data partition total: "+gb(fs.getTotalBytes())+"\n"+
-            "App data partition free: "+gb(fs.getAvailableBytes())+"\n"+
-            "Battery percent: "+percent()+"\n"+
-            "Battery temperature C: "+temperature()+"\n"+
-            "Battery status: "+chargeStatus()+"\n"+
-            "Sensor count: "+sensorCount+"\n"+
+            (english?"Total RAM: ":"Toplam RAM: ")+gb(m.totalMem)+"\n"+
+            (english?"Available RAM: ":"Kullanılabilir RAM: ")+gb(m.availMem)+"\n"+
+            (english?"App data partition total: ":"Uygulama veri alanı toplam: ")+gb(fs.getTotalBytes())+"\n"+
+            (english?"App data partition free: ":"Uygulama veri alanı boş: ")+gb(fs.getAvailableBytes())+"\n"+
+            (english?"Battery percent: ":"Batarya yüzdesi: ")+percent()+"\n"+
+            (english?"Battery temperature C: ":"Batarya sıcaklığı C: ")+temperature()+"\n"+
+            (english?"Battery status: ":"Batarya durumu: ")+chargeStatus()+"\n"+
+            (english?"Sensor count: ":"Sensör sayısı: ")+sensorCount+"\n"+
             "Generated offline by ByBlack DeviceLab\n";
     }
 
@@ -488,7 +578,7 @@ public class MainActivity extends Activity implements SensorEventListener {
             Intent i=new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_TEXT,makeReport());
-            startActivity(Intent.createChooser(i,"Raporu paylaş"));
+            startActivity(Intent.createChooser(i,trEn("Raporu paylaş")));
         });
 
         action("RAPORU KOPYALA",c,()->{
@@ -497,7 +587,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                 getSystemService(CLIPBOARD_SERVICE);
             cm.setPrimaryClip(
                 ClipData.newPlainText("DeviceLab Report",makeReport()));
-            Toast.makeText(this,"Rapor kopyalandı",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,trEn("Rapor kopyalandı"),Toast.LENGTH_SHORT).show();
         });
 
         action("RAPORU YENİLE",c,()->showTab(3));
