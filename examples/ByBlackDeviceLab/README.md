@@ -11,7 +11,9 @@ Android hardware information and diagnostics app developed and tested on a Samsu
 - Display color and touchscreen drawing tests
 - Copyable and shareable device report
 
-**[Build the APK directly on your phone / Termux ile APK derle](TERMUX-BUILD.md)**\n\n## Build environment
+**[Build the APK directly on your phone / Termux ile APK derle](TERMUX-BUILD.md)**
+
+## Build environment
 Java 26, Gradle 9.6, Android SDK 34, Android Gradle Plugin 8.7.3, Termux ARM64 `aapt2`. Offline Gradle build requires dependencies already cached.
 
 ```sh
@@ -21,4 +23,6 @@ export ANDROID_HOME="$HOME/android-sdk"
 gradle --offline --no-daemon assembleDebug
 ```
 
-**Status:** Java source and Gradle project files are published. This is an experimental debug project, not a production release. Building on another device has not been independently verified.
+**Verified builds (19 Oct 2026):** GitHub Actions compiled the debug APK successfully. A Samsung Galaxy S24 Ultra running standard ARM64 Termux also built it successfully in 18 seconds (31 Gradle tasks); output: `Download/ByBlack-DeviceLab-V2-PRO.apk`. This is not a production release, and other devices are not yet verified.
+
+**[GitHub Actions build](../../actions/workflows/byblack-devicelab-build.yml)** · **[Termux instructions](TERMUX-BUILD.md)**
