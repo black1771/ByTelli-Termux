@@ -32,7 +32,7 @@ Başarılı derlemede APK: `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PR
 - Bu proje **deneysel debug APK** üretir. Google Play için imzalı sürüm değildir.
 - Kullanılan `targetSdk 28` modern Android dağıtımı için yükseltilmelidir; cihazdan cihaza uyumluluk değişebilir.
 - APK otomatik yüklenmez. Yalnızca oluşturulur.
-- Betiğin her cihazda çalıştığı henüz doğrulanmamıştır.
+- **Gerçek Termux testi (19 Ekim 2026):** Samsung S24 Ultra üzerinde standart Termux ile `bash build.sh` başarılı: `BUILD SUCCESSFUL in 18s`, `31 actionable tasks: 31 executed`; APK `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk` konumuna kopyalandı. Bu sonuç başka cihazlarda başarı garantisi değildir.
 
 ## English
 
