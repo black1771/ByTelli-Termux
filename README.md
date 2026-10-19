@@ -17,13 +17,13 @@ Byblack is an independent, experimental Android development project built and te
 
 > **What makes this different?** The development workflow runs on the phone itself — including Java, Gradle and Android SDK setup. No desktop computer was used for the verified Byblack Developer Lab build.
 
-## 📱 ByBlack DeviceLab V2 PRO — Real Android Demo
+## 📱 ByBlack DeviceLab V3 Bilingual — Real Android Demo
 
 <p align="center">
   <img src="ByBlack-DeviceLab-Preview.gif" alt="ByBlack DeviceLab V2 PRO running on Samsung Galaxy S24 Ultra: sensor inventory and display tests" width="320">
 </p>
 
-**Android hardware diagnostics, built directly on a phone using Termux.** The demo shows the experimental V2 PRO app running on a Samsung Galaxy S24 Ultra with Android 17.
+**Android hardware diagnostics with Turkish / English language selection, built directly on a phone using Termux.** The demo shows the experimental V2 PRO app running on a Samsung Galaxy S24 Ultra with Android 17.
 
 - Device information, memory, storage and battery readings
 - Sensor inventory and live sensor values (subject to device support)
@@ -33,9 +33,9 @@ Byblack is an independent, experimental Android development project built and te
 
 [![DeviceLab APK Build](https://github.com/black1771/ByTelli-Termux/actions/workflows/byblack-devicelab-build.yml/badge.svg)](https://github.com/black1771/ByTelli-Termux/actions/workflows/byblack-devicelab-build.yml)
 
-**Verified on 19 October 2026:** GitHub Actions built the DeviceLab APK; an ARM64 Samsung Galaxy S24 Ultra also built the same GitHub source in standard Termux (18 seconds, 31 Gradle tasks). **[Source code](examples/ByBlackDeviceLab)** · **[Step-by-step Termux APK build](examples/ByBlackDeviceLab/TERMUX-BUILD.md)** · **[Build script](scripts/build-devicelab-termux.sh)**. No prebuilt DeviceLab APK release is published here. Other phones have not yet been verified; measurements and sensors vary by device.
+**Verified on 19 October 2026:** GitHub Actions built the DeviceLab APK; an ARM64 Samsung Galaxy S24 Ultra also built the same GitHub source in standard Termux (18 seconds, 31 Gradle tasks). **[Source code](examples/ByBlackDeviceLab)** · **[Step-by-step Termux APK build](examples/ByBlackDeviceLab/TERMUX-BUILD.md)** · **[Build script](scripts/build-devicelab-termux.sh)**. The V3 APK can be downloaded from GitHub Actions artifacts after a successful build; a GitHub Release APK has not been published yet. Other phones have not yet been verified; measurements and sensors vary by device.
 
-**Türkçe:** ByBlack DeviceLab V2 PRO, Android 17 yüklü Samsung S24 Ultra üzerinde test edilen açık kaynak bir cihaz tanılama uygulamasıdır. Pil, RAM, depolama ve sensör bilgilerini gösterir; ekran renk ve dokunmatik testleri sunar. **19 Ekim 2026'da** hem GitHub Actions hem standart ARM64 Termux üzerinden APK derlemesi başarılı oldu (Termux: 18 saniye, 31 görev). [Kaynak kodu](examples/ByBlackDeviceLab) · [Telefonda APK oluşturma rehberi](examples/ByBlackDeviceLab/TERMUX-BUILD.md) · [Derleme betiği](scripts/build-devicelab-termux.sh). Hazır DeviceLab APK sürümü yayımlanmadı; diğer cihazlarda uyumluluk garanti edilmez.
+**Türkçe:** ByBlack DeviceLab V3 Bilingual, Android 17 yüklü Samsung S24 Ultra üzerinde test edilen açık kaynak bir cihaz tanılama uygulamasıdır. Pil, RAM, depolama ve sensör bilgilerini gösterir; ekran renk ve dokunmatik testleri sunar. **19 Ekim 2026'da** hem GitHub Actions hem standart ARM64 Termux üzerinden APK derlemesi başarılı oldu (Termux: 18 saniye, 31 görev). [Kaynak kodu](examples/ByBlackDeviceLab) · [Telefonda APK oluşturma rehberi](examples/ByBlackDeviceLab/TERMUX-BUILD.md) · [Derleme betiği](scripts/build-devicelab-termux.sh). GitHub Releases üzerinden hazır APK henüz yayımlanmadı; diğer cihazlarda uyumluluk garanti edilmez.
 
 ## 🧮 ByBlack Calculator V2 — Scientific Calculator
 
