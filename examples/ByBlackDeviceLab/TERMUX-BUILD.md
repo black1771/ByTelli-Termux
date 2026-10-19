@@ -1,4 +1,4 @@
-# ByBlack DeviceLab V2 PRO — Termux ile kaynak koddan APK
+# ByBlack DeviceLab V3 Bilingual — Termux ile kaynak koddan APK
 
 **Açık kaynak Android donanım tanılama uygulaması.** Bilgisayar veya root gerektirmeden, standart ARM64 Termux üzerinde APK derlenebilir. Derleme ortamı kurulumu internet ve depolama alanı gerektirir; önbellekte bağımlılıklar varsa derleme çevrimdışı yapılabilir.
 
@@ -22,7 +22,7 @@ curl -fL https://raw.githubusercontent.com/black1771/ByTelli-Termux/main/scripts
 
 `curl` yüklü değilse `pkg install curl` komutunu kullan. İndirdiğin betiği çalıştırmadan önce incele.
 
-Başarılı derlemede APK: `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk`.
+Başarılı derlemede APK: `/storage/emulated/0/Download/ByBlack-DeviceLab-V3-Bilingual.apk`.
 
 ## Önemli
 
@@ -32,11 +32,11 @@ Başarılı derlemede APK: `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PR
 - Bu proje **deneysel debug APK** üretir. Google Play için imzalı sürüm değildir.
 - Kullanılan `targetSdk 28` modern Android dağıtımı için yükseltilmelidir; cihazdan cihaza uyumluluk değişebilir.
 - APK otomatik yüklenmez. Yalnızca oluşturulur.
-- **Gerçek Termux testi (19 Ekim 2026):** Samsung S24 Ultra üzerinde standart Termux ile `bash build.sh` başarılı: `BUILD SUCCESSFUL in 18s`, `31 actionable tasks: 31 executed`; APK `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk` konumuna kopyalandı. Bu sonuç başka cihazlarda başarı garantisi değildir.
+- **Gerçek Termux testi (19 Ekim 2026):** Samsung S24 Ultra üzerinde standart Termux ile `bash build.sh` başarılı: `BUILD SUCCESSFUL in 18s`, `31 actionable tasks: 31 executed`; APK `/storage/emulated/0/Download/ByBlack-DeviceLab-V3-Bilingual.apk` konumuna kopyalandı. Bu sonuç başka cihazlarda başarı garantisi değildir.
 
 ## English — Build from source in Termux
 
-**ByBlack DeviceLab V2 PRO** is an open-source experimental Android hardware diagnostics app. You can build a debug APK on an ARM64 Android phone using standard Termux, without a PC or root. Initial setup requires an internet connection and several GB of free storage.
+**ByBlack DeviceLab V3 Bilingual** is an open-source experimental Android hardware diagnostics app. You can build a debug APK on an ARM64 Android phone using standard Termux, without a PC or root. Initial setup requires an internet connection and several GB of free storage.
 
 ### Step 1 — Install the Android build tools
 
@@ -55,7 +55,7 @@ curl -fL https://raw.githubusercontent.com/black1771/ByTelli-Termux/main/scripts
 
 Review the script before running it. The script clones the latest public repository into a separate temporary directory, leaving your existing projects unchanged. Gradle downloads missing dependencies if needed.
 
-**Output:** `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk` when storage permission is available.
+**Output:** `/storage/emulated/0/Download/ByBlack-DeviceLab-V3-Bilingual.apk` when storage permission is available.
 
 ### Notes and verified result
 
