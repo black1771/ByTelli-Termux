@@ -29,7 +29,9 @@ Byblack is an independent, experimental Android development project built and te
 - Copyable and shareable device report
 - Offline operation, no root or internet permission required
 
-**Status:** Real-device UI demo and [published Java source](examples/ByBlackDeviceLab). [Build an APK on your own Android phone using Termux](examples/ByBlackDeviceLab/TERMUX-BUILD.md). No prebuilt DeviceLab APK release is published here. Measurements and supported sensors vary by device.
+[![DeviceLab APK Build](https://github.com/black1771/ByTelli-Termux/actions/workflows/byblack-devicelab-build.yml/badge.svg)](https://github.com/black1771/ByTelli-Termux/actions/workflows/byblack-devicelab-build.yml)
+
+**Verified on 19 October 2026:** GitHub Actions built the DeviceLab APK; an ARM64 Samsung Galaxy S24 Ultra also built the same GitHub source in standard Termux (18 seconds, 31 Gradle tasks). **[Source code](examples/ByBlackDeviceLab)** · **[Step-by-step Termux APK build](examples/ByBlackDeviceLab/TERMUX-BUILD.md)** · **[Build script](scripts/build-devicelab-termux.sh)**. No prebuilt DeviceLab APK release is published here. Other phones have not yet been verified; measurements and sensors vary by device.
 
 **Türkçe:** ByBlack DeviceLab V2 PRO gerçek telefonda test edildi. GIF'te sensör listesi ve ekran testleri gösteriliyor. [Kaynak kodu](examples/ByBlackDeviceLab) ve [Termux'ta APK derleme rehberi](examples/ByBlackDeviceLab/TERMUX-BUILD.md) yayımlandı; hazır APK henüz yayımlanmadı.
 
