@@ -161,7 +161,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     void field(LinearLayout parent,String name,String value) {
-        TextView label=text(name.toUpperCase(Locale.ROOT),11,MUTED,true);
+        TextView label=text(trEn(name).toUpperCase(english?Locale.ENGLISH:new Locale("tr","TR")),11,MUTED,true);
         padding(label,0,10,0,3);
         parent.addView(label);
         TextView v=text(trEn(value),16,WHITE,false);
