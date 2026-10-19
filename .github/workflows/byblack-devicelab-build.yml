@@ -45,6 +45,17 @@ jobs:
           path: examples/ByBlackDeviceLab/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
+      - name: Package complete V3 source code
+        shell: bash
+        run: |
+          set -euo pipefail
+          zip -qr ByBlack-DeviceLab-V3-Bilingual-SOURCE.zip \
+            examples/ByBlackDeviceLab \
+            scripts/build-devicelab-termux.sh \
+            docs/ANDROID-APK-BUILD.md \
+            -x '*/build/*' '*/.gradle/*' '*/.git/*'
+          unzip -tq ByBlack-DeviceLab-V3-Bilingual-SOURCE.zip
+
       - name: Publish V3 bilingual debug APK to GitHub Releases
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
@@ -57,9 +68,9 @@ jobs:
           cp "$APK" "ByBlack-DeviceLab-V3-Bilingual-debug.apk"
           TAG="devicelab-v3.0.0-bilingual"
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "ByBlack-DeviceLab-V3-Bilingual-debug.apk" --clobber
+            gh release upload "$TAG" "ByBlack-DeviceLab-V3-Bilingual-debug.apk" "ByBlack-DeviceLab-V3-Bilingual-SOURCE.zip" --clobber
           else
-            gh release create "$TAG" "ByBlack-DeviceLab-V3-Bilingual-debug.apk" \
+            gh release create "$TAG" "ByBlack-DeviceLab-V3-Bilingual-debug.apk" "ByBlack-DeviceLab-V3-Bilingual-SOURCE.zip" \
               --target "$GITHUB_SHA" \
               --title "ByBlack DeviceLab V3 — Türkçe / English" \
               --notes "ByBlack DeviceLab V3 Bilingual (TR/EN). Android hardware diagnostics, sensors, touchscreen and display tests, battery and RAM monitoring, device reports. In-app language selector remembers your preference. Tested by the developer on Samsung Galaxy S24 Ultra / Android 17. This is a debug APK, not a Play Store production-signed release. Source code: examples/ByBlackDeviceLab. Türkçe: Türkçe ve İngilizce arayüz, sensör, ekran, pil ve RAM testleri; deneysel debug APK."
