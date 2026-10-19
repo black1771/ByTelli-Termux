@@ -9,7 +9,9 @@
 [![Android 11 smoke test](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-11-12-compatibility.yml/badge.svg)](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-11-12-compatibility.yml)
 [![Android 13–15 smoke tests](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-compatibility.yml/badge.svg)](https://github.com/black1771/ByTelli-Termux/actions/workflows/android-compatibility.yml)
 
-**English | [Türkçe](#türkçe)**
+**[English](#english) | [Türkçe](#türkçe)**
+
+<a id="english"></a>
 
 Byblack is an independent, experimental Android development project built and tested **using an Android phone and standard Termux**. We share working source code, build instructions, troubleshooting notes, and a downloadable Android editor.
 
@@ -33,7 +35,7 @@ Byblack is an independent, experimental Android development project built and te
 
 **Verified on 19 October 2026:** GitHub Actions built the DeviceLab APK; an ARM64 Samsung Galaxy S24 Ultra also built the same GitHub source in standard Termux (18 seconds, 31 Gradle tasks). **[Source code](examples/ByBlackDeviceLab)** · **[Step-by-step Termux APK build](examples/ByBlackDeviceLab/TERMUX-BUILD.md)** · **[Build script](scripts/build-devicelab-termux.sh)**. No prebuilt DeviceLab APK release is published here. Other phones have not yet been verified; measurements and sensors vary by device.
 
-**Türkçe:** ByBlack DeviceLab V2 PRO gerçek telefonda test edildi. GIF'te sensör listesi ve ekran testleri gösteriliyor. [Kaynak kodu](examples/ByBlackDeviceLab) ve [Termux'ta APK derleme rehberi](examples/ByBlackDeviceLab/TERMUX-BUILD.md) yayımlandı; hazır APK henüz yayımlanmadı.
+**Türkçe:** ByBlack DeviceLab V2 PRO, Android 17 yüklü Samsung S24 Ultra üzerinde test edilen açık kaynak bir cihaz tanılama uygulamasıdır. Pil, RAM, depolama ve sensör bilgilerini gösterir; ekran renk ve dokunmatik testleri sunar. **19 Ekim 2026'da** hem GitHub Actions hem standart ARM64 Termux üzerinden APK derlemesi başarılı oldu (Termux: 18 saniye, 31 görev). [Kaynak kodu](examples/ByBlackDeviceLab) · [Telefonda APK oluşturma rehberi](examples/ByBlackDeviceLab/TERMUX-BUILD.md) · [Derleme betiği](scripts/build-devicelab-termux.sh). Hazır DeviceLab APK sürümü yayımlanmadı; diğer cihazlarda uyumluluk garanti edilmez.
 
 ## 🧮 ByBlack Calculator V2 — Scientific Calculator
 
