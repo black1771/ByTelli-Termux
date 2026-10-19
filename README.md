@@ -29,9 +29,9 @@ Byblack is an independent, experimental Android development project built and te
 - Copyable and shareable device report
 - Offline operation, no root or internet permission required
 
-**Status:** Real-device UI demo; experimental debug build. Source and APK are not yet published in this repository. Measurements and supported sensors vary by device.
+**Status:** Real-device UI demo and [published Java source](examples/ByBlackDeviceLab). [Build an APK on your own Android phone using Termux](examples/ByBlackDeviceLab/TERMUX-BUILD.md). No prebuilt DeviceLab APK release is published here. Measurements and supported sensors vary by device.
 
-**Türkçe:** ByBlack DeviceLab V2 PRO gerçek telefonda test edildi. GIF'te sensör listesi ve ekran testleri gösteriliyor. Kaynak kodu ve APK henüz bu depoda yayımlanmadı.
+**Türkçe:** ByBlack DeviceLab V2 PRO gerçek telefonda test edildi. GIF'te sensör listesi ve ekran testleri gösteriliyor. [Kaynak kodu](examples/ByBlackDeviceLab) ve [Termux'ta APK derleme rehberi](examples/ByBlackDeviceLab/TERMUX-BUILD.md) yayımlandı; hazır APK henüz yayımlanmadı.
 
 ## 🧮 ByBlack Calculator V2 — Scientific Calculator
 
