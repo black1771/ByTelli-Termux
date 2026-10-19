@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -Eeuo pipefail
 
-echo "=== ByBlack DeviceLab V2 PRO | Android Termux APK ==="
+echo "=== ByBlack DeviceLab V3 Bilingual | Android Termux APK ==="
 if [[ "${PREFIX:-}" != "/data/data/com.termux/files/usr" ]]; then
   echo "HATA: Standart Termux gerekir (com.termux)."
   exit 1
@@ -49,7 +49,7 @@ gradle --no-daemon assembleDebug
 APK="app/build/outputs/apk/debug/app-debug.apk"
 [[ -s "$APK" ]] || { echo "HATA: APK olusmadi."; exit 1; }
 
-OUT="/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk"
+OUT="/storage/emulated/0/Download/ByBlack-DeviceLab-V3-Bilingual.apk"
 if [[ -d /storage/emulated/0/Download && -w /storage/emulated/0/Download ]]; then
   cp "$APK" "$OUT"
   echo "BASARILI: $OUT"
