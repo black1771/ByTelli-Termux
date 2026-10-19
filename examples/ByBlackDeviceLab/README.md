@@ -11,7 +11,7 @@ Android hardware information and diagnostics app developed and tested on a Samsu
 - Display color and touchscreen drawing tests
 - Copyable and shareable device report
 
-## Build environment
+**[Build the APK directly on your phone / Termux ile APK derle](TERMUX-BUILD.md)**\n\n## Build environment
 Java 26, Gradle 9.6, Android SDK 34, Android Gradle Plugin 8.7.3, Termux ARM64 `aapt2`. Offline Gradle build requires dependencies already cached.
 
 ```sh
