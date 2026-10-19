@@ -1,28 +1,61 @@
-# ByBlack DeviceLab V2 PRO (experimental)
+# ByBlack DeviceLab V2 PRO
 
-Android hardware information and diagnostics app developed and tested on a Samsung Galaxy S24 Ultra with Termux.
+**[Türkçe](#turkce) | [English](#english)**
 
-![Real-device demo](../../ByBlack-DeviceLab-Preview.gif)
+![ByBlack DeviceLab real-device demo / Gerçek cihaz tanıtımı](../../ByBlack-DeviceLab-Preview.gif)
 
-## Features
-- Device, Android, memory and storage information
-- Battery readings and RAM history graph
-- Sensor inventory and live sensor readings
+<a id="turkce"></a>
+## 🇹🇷 Türkçe
+
+**ByBlack DeviceLab V2 PRO**, Android telefonlar için açık kaynaklı, deneysel donanım bilgisi ve tanılama uygulamasıdır. Samsung Galaxy S24 Ultra üzerinde geliştirilip Termux ile derlenmiştir.
+
+### Özellikler
+- Cihaz, Android sürümü, RAM ve depolama bilgileri
+- Pil durumu ve RAM geçmiş grafiği
+- Sensör listesi ve desteklenen sensörlerden canlı veriler
+- Ekran renkleri ve dokunmatik çizim testleri
+- Kopyalanabilir ve paylaşılabilir cihaz raporu
+
+### Telefonda APK derle
+
+**[Adım adım Termux rehberi](TERMUX-BUILD.md)** · **[Java kaynak kodu](app/src/main/java/com/byblack/devicelab/MainActivity.java)**
+
+Önce [Java, Gradle, SDK 34 ve ARM64 AAPT2 kurulumunu](../../docs/ANDROID-APK-BUILD.md) tamamla. Ardından standart Termux'ta:
+
+```sh
+pkg install -y git curl
+curl -fL https://raw.githubusercontent.com/black1771/ByTelli-Termux/main/scripts/build-devicelab-termux.sh -o build.sh && bash build.sh
+```
+
+Başarılı olursa APK: `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk`.
+
+**Doğrulama (19 Ekim 2026):** GitHub Actions APK derlemesi başarılı. Samsung Galaxy S24 Ultra üzerinde standart ARM64 Termux derlemesi de 18 saniyede, 31 Gradle göreviyle başarıyla tamamlandı. Başka cihazlarda henüz doğrulanmadı. Bu bir deneysel debug APK'dır; Google Play sürümü değildir.
+
+<a id="english"></a>
+## 🇬🇧 English
+
+**ByBlack DeviceLab V2 PRO** is an open-source experimental Android hardware information and diagnostics app, developed and built on a Samsung Galaxy S24 Ultra using Termux.
+
+### Features
+- Device, Android version, RAM and storage information
+- Battery status and RAM history graph
+- Sensor inventory and live readings where supported
 - Display color and touchscreen drawing tests
 - Copyable and shareable device report
 
-**[Build the APK directly on your phone / Termux ile APK derle](TERMUX-BUILD.md)**
+### Build an APK on your Android phone
 
-## Build environment
-Java 26, Gradle 9.6, Android SDK 34, Android Gradle Plugin 8.7.3, Termux ARM64 `aapt2`. Offline Gradle build requires dependencies already cached.
+**[Step-by-step Termux guide](TERMUX-BUILD.md)** · **[Java source code](app/src/main/java/com/byblack/devicelab/MainActivity.java)**
+
+First install [Java, Gradle, Android SDK 34 and native ARM64 AAPT2](../../docs/ANDROID-APK-BUILD.md). Then run in standard Termux:
 
 ```sh
-export JAVA_HOME="$PREFIX/lib/jvm/java-26-openjdk"
-export PATH="$JAVA_HOME/bin:$PREFIX/bin:$PATH"
-export ANDROID_HOME="$HOME/android-sdk"
-gradle --offline --no-daemon assembleDebug
+pkg install -y git curl
+curl -fL https://raw.githubusercontent.com/black1771/ByTelli-Termux/main/scripts/build-devicelab-termux.sh -o build.sh && bash build.sh
 ```
 
-**Verified builds (19 Oct 2026):** GitHub Actions compiled the debug APK successfully. A Samsung Galaxy S24 Ultra running standard ARM64 Termux also built it successfully in 18 seconds (31 Gradle tasks); output: `Download/ByBlack-DeviceLab-V2-PRO.apk`. This is not a production release, and other devices are not yet verified.
+On success, the debug APK is copied to `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PRO.apk`.
 
-**[GitHub Actions build](../../actions/workflows/byblack-devicelab-build.yml)** · **[Termux instructions](TERMUX-BUILD.md)**
+**Verified (19 October 2026):** GitHub Actions successfully built the APK. A standard ARM64 Termux build on Samsung Galaxy S24 Ultra also succeeded in 18 seconds with 31 Gradle tasks. Other devices have not been verified. This is an experimental debug APK, not a Google Play release.
+
+**[GitHub Actions build](https://github.com/black1771/ByTelli-Termux/actions/workflows/byblack-devicelab-build.yml)** · **[Build script](../../scripts/build-devicelab-termux.sh)**
