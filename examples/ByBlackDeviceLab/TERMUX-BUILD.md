@@ -27,8 +27,8 @@ Başarılı derlemede APK: `/storage/emulated/0/Download/ByBlack-DeviceLab-V2-PR
 ## Önemli
 
 - Kaynak: [Java ve Gradle dosyaları](.)
-- Betik mevcut `~/ByTelli-Termux` klasörünü silmez veya üzerine yazmaz; varsa onu kullanır.
-- Derleme `--offline` kullanır: AGP/Gradle bağımlılıkları önceden indirilmemişse başarısız olabilir. Bu durumda bağımlılıkları kurduktan sonra tekrar dene.
+- Betik her çalışmada ayrı bir geçici proje klasörüne güncel kaynak kodunu indirir; mevcut projeleri değiştirmez.
+- Derleme gerektiğinde Gradle/AGP bağımlılıklarını internetten indirir. GitHub Actions derlemesinin başarılı olması Termux ARM64 ortamında derlemenin de otomatik olarak başarılı olacağını garanti etmez.
 - Bu proje **deneysel debug APK** üretir. Google Play için imzalı sürüm değildir.
 - Kullanılan `targetSdk 28` modern Android dağıtımı için yükseltilmelidir; cihazdan cihaza uyumluluk değişebilir.
 - APK otomatik yüklenmez. Yalnızca oluşturulur.
