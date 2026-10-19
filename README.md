@@ -15,6 +15,24 @@ Byblack is an independent, experimental Android development project built and te
 
 > **What makes this different?** The development workflow runs on the phone itself — including Java, Gradle and Android SDK setup. No desktop computer was used for the verified Byblack Developer Lab build.
 
+## 📱 ByBlack DeviceLab V2 PRO — Real Android Demo
+
+<p align="center">
+  <img src="ByBlack-DeviceLab-Preview.gif" alt="ByBlack DeviceLab V2 PRO running on Samsung Galaxy S24 Ultra: sensor inventory and display tests" width="320">
+</p>
+
+**Android hardware diagnostics, built directly on a phone using Termux.** The demo shows the experimental V2 PRO app running on a Samsung Galaxy S24 Ultra with Android 17.
+
+- Device information, memory, storage and battery readings
+- Sensor inventory and live sensor values (subject to device support)
+- Display color and touchscreen drawing tests
+- Copyable and shareable device report
+- Offline operation, no root or internet permission required
+
+**Status:** Real-device UI demo; experimental debug build. Source and APK are not yet published in this repository. Measurements and supported sensors vary by device.
+
+**Türkçe:** ByBlack DeviceLab V2 PRO gerçek telefonda test edildi. GIF'te sensör listesi ve ekran testleri gösteriliyor. Kaynak kodu ve APK henüz bu depoda yayımlanmadı.
+
 ## 🧮 ByBlack Calculator V2 — Scientific Calculator
 
 A dark-themed scientific calculator built on an Android phone with Termux. The screenshot below shows the V2 interface running on a real device, including trigonometric functions, logarithms, history, and a calculation example.
