@@ -1,0 +1,2 @@
+plugins { id 'com.android.application' }
+android { namespace 'com.byblack.battlechess'; compileSdk 34; defaultConfig { applicationId 'com.byblack.battlechess'; minSdk 24; targetSdk 28; versionCode 132; versionName '1.32-source-reconstruction' } }
