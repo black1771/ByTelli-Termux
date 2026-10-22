@@ -1,4 +1,47 @@
-<p align="center">\n  <img src="a_wide_high_contrast_neon_tech_themed_promotiona.png" alt="Byblack — Android development directly on your phone with Termux" width="100%">\n</p>\n\n# Byblack — Android Development, Right on Your Phone 🚀
+<!-- BYBLACK-SHOWCASE-START -->
+<div align="center">
+
+# ⚡ BYBLACK DEVELOPER LAB
+
+### 📱 Build Android Apps. Directly on Your Phone.
+
+**No PC Required · Android ARM64 · Termux · Java · Gradle**
+
+**Telefonundan Android APK geliştir, derle ve test et.**
+
+[![Android](https://img.shields.io/badge/Android-ARM64-3DDC84?logo=android&logoColor=white)](https://developer.android.com/)
+[![Termux](https://img.shields.io/badge/Powered_by-Termux-222222)](https://github.com/termux/termux-app)
+[![Java](https://img.shields.io/badge/Java-21%2B-orange)](https://openjdk.org/)
+[![Gradle](https://img.shields.io/badge/Build-Gradle-02303A?logo=gradle)](https://gradle.org/)
+[![MIT](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+
+### 🚀 Explore the Project
+
+[**📥 Releases**](https://github.com/black1771/ByTelli-Termux/releases)
+&nbsp; • &nbsp;
+[**🛠 Build Guide**](docs/ANDROID-APK-BUILD.md)
+&nbsp; • &nbsp;
+[**📱 DeviceLab**](examples/ByBlackDeviceLab)
+&nbsp; • &nbsp;
+[**🧪 CI Tests**](https://github.com/black1771/ByTelli-Termux/actions)
+
+---
+
+**🇬🇧 English:** Experimental Android development tools,
+sample apps and reproducible build guides for ARM64 phones.
+
+**🇹🇷 Türkçe:** ARM64 telefonlarda Android uygulaması geliştirmek
+için açık kaynak araçlar, örnek projeler ve derleme rehberleri.
+
+</div>
+
+<!-- BYBLACK-SHOWCASE-END -->
+
+<p align="center">
+  <img src="a_wide_high_contrast_neon_tech_themed_promotiona.png" alt="Byblack — Android development directly on your phone with Termux" width="100%">
+</p>
+
+# Byblack — Android Development, Right on Your Phone 🚀
 
 **Build Android apps directly on your phone. No PC required.**
 
